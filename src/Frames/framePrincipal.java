@@ -1,4 +1,4 @@
-package frames;
+package Frames;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

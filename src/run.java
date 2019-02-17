@@ -1,5 +1,5 @@
 
-import frames.framePrincipal;
+import Frames.framePrincipal;
 
 
 public class run {
