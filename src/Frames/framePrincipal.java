@@ -38,7 +38,7 @@ public class framePrincipal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        buttonDaniel = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -95,8 +95,14 @@ public class framePrincipal extends javax.swing.JFrame {
         jLabel5.setText("NUMERO 4");
         panelMenu.add(jLabel5);
 
-        jLabel6.setText("NUMERO 5");
-        panelMenu.add(jLabel6);
+        buttonDaniel.setBackground(new java.awt.Color(255, 102, 102));
+        buttonDaniel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/imagenPacman.png"))); // NOI18N
+        buttonDaniel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonDanielActionPerformed(evt);
+            }
+        });
+        panelMenu.add(buttonDaniel);
 
         jLabel7.setText("NUMERO 6");
         panelMenu.add(jLabel7);
@@ -149,18 +155,22 @@ public class framePrincipal extends javax.swing.JFrame {
        game2.setVisible(true);
     }//GEN-LAST:event_jLabel2MouseClicked
 
+    private void buttonDanielActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDanielActionPerformed
+        //djfajflaldjksfdfassssssssssssssssssssssssssss
+    }//GEN-LAST:event_buttonDanielActionPerformed
+
     /**
      * @param args the command line arguments
      */
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonDaniel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
