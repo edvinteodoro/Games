@@ -5,6 +5,11 @@
  */
 package Frames;
 
+import java.util.Random;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 
 /**
  *
@@ -12,6 +17,7 @@ package Frames;
  */
 public class game1 extends javax.swing.JFrame {
 
+    int numeroDados;
     /**
      * Creates new form ventana_Principal
      */
@@ -34,8 +40,9 @@ public class game1 extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        label_dado2 = new javax.swing.JLabel();
+        label_dado1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -57,20 +64,73 @@ public class game1 extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(146, 217, 181));
         jPanel1.setLayout(null);
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/rsz_seis.jpg"))); // NOI18N
-        jLabel5.setText("jLabel5");
-        jPanel1.add(jLabel5);
-        jLabel5.setBounds(10, 200, 190, 180);
+        label_dado2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/game1.dado6.jpg"))); // NOI18N
+        jPanel1.add(label_dado2);
+        label_dado2.setBounds(10, 200, 190, 180);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/rsz_uno.jpg"))); // NOI18N
-        jLabel6.setText("jLabel5");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(10, 10, 190, 180);
+        label_dado1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/game1.dado1.jpg"))); // NOI18N
+        jPanel1.add(label_dado1);
+        label_dado1.setBounds(10, 10, 190, 180);
+
+        jButton1.setText("TIRAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(40, 430, 140, 90);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 120, 210, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Random random = new Random();
+        int dado1 = 0;
+        dado1 = ((int)(random.nextDouble()*6));
+        int dado2 = 0;
+        dado2 = ((int)(random.nextDouble()*6));
+        
+        if(dado1 == 0){
+            label_dado1.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado1.jpg")));
+        }else if(dado1 == 1){
+            label_dado1.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado2.jpg")));
+        }else if(dado1 == 2){
+            label_dado1.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado3.jpg")));
+        }else if(dado1 == 3){
+            label_dado1.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado4.jpg")));
+        }else if(dado1 == 4){
+            label_dado1.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado5.jpg")));
+        }else if(dado1 == 5){
+            label_dado1.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado6.jpg")));
+        }
+        
+        
+        if(dado2 == 0){
+            label_dado2.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado1.jpg")));
+        }else if(dado2 == 1){
+            label_dado2.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado2.jpg")));
+        }else if(dado2 == 2){
+            label_dado2.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado3.jpg")));
+        }else if(dado2 == 3){
+            label_dado2.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado4.jpg")));
+        }else if(dado2 == 4){
+            label_dado2.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado5.jpg")));
+        }else if(dado2 == 5){
+            label_dado2.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado6.jpg")));
+        }
+        
+        dado1++;
+        dado2++;
+        int numeroTotal = dado1+dado2;
+        numeroDados = numeroTotal;
+        
+        JOptionPane.showMessageDialog(this, "DEBE AVANZAR "+ numeroTotal + " ESPACIOS", "*****ATENCION*****", HEIGHT);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -109,12 +169,13 @@ public class game1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel label_dado1;
+    private javax.swing.JLabel label_dado2;
     // End of variables declaration//GEN-END:variables
 }
