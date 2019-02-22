@@ -34,7 +34,7 @@ public class game1 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Boton");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -48,7 +48,7 @@ public class game1 extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(329, 329, 329)
                         .addComponent(jButton1)))
-                .addContainerGap(955, Short.MAX_VALUE))
+                .addContainerGap(969, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
