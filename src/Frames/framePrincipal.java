@@ -1,5 +1,7 @@
 package Frames;
 
+import game2.frameGame2;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -35,7 +37,7 @@ public class framePrincipal extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         panelMenu = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         buttonDaniel = new javax.swing.JButton();
@@ -81,13 +83,14 @@ public class framePrincipal extends javax.swing.JFrame {
         jLabel3.setText("NUMERO 1");
         panelMenu.add(jLabel3);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Game2.png"))); // NOI18N
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
+        jButton1.setBackground(new java.awt.Color(11, 173, 191));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Game2.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
-        panelMenu.add(jLabel2);
+        panelMenu.add(jButton1);
 
         jLabel4.setText("NUMERO 3");
         panelMenu.add(jLabel4);
@@ -150,14 +153,16 @@ public class framePrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-       game2 game2=new game2();
-       game2.setVisible(true);
-    }//GEN-LAST:event_jLabel2MouseClicked
-
     private void buttonDanielActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDanielActionPerformed
         //djfajflaldjksfdfassssssssssssssssssssssssssss
     }//GEN-LAST:event_buttonDanielActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //game2 game2=new game2();
+        //game2.setVisible(true);
+        frameGame2 game1=new frameGame2();
+        game1.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,8 +171,8 @@ public class framePrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonDaniel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
