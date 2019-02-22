@@ -1,5 +1,8 @@
 package Frames;
 
+import game1.framePrincipalGame1;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -167,8 +170,17 @@ public class framePrincipal extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        game1 game_1 = new game1();
-        game_1.setVisible(true);
+        
+        String numberOfPlayers = JOptionPane.showInputDialog(this, "ENTER DE NUMBER OF PLAYERS", "2");
+        //System.out.println(numeroJugadores);
+        if(numberOfPlayers.equalsIgnoreCase("2") | numberOfPlayers.equalsIgnoreCase("3") | numberOfPlayers.equalsIgnoreCase("4")){
+            framePrincipalGame1 game_1 = new framePrincipalGame1(numberOfPlayers);
+            //game_1.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "THE GAME HAS A MAXIMUM OF 4 PLAYERS");
+        }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

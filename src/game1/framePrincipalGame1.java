@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Frames;
+package game1;
 
 import java.util.Random;
 import javax.swing.ImageIcon;
@@ -15,14 +15,27 @@ import javax.swing.JPanel;
  *
  * @author charly
  */
-public class game1 extends javax.swing.JFrame {
+public class framePrincipalGame1 extends javax.swing.JFrame {
 
     int numeroDados;
+    playerController controller = new playerController();
+    int numberPlayersGame;
     /**
      * Creates new form ventana_Principal
      */
-    public game1() {
+    public framePrincipalGame1(String numberOfPlayers) {
         initComponents();
+        int number = Integer.parseInt(numberOfPlayers);
+        numberPlayersGame = number;
+        for (int i = 0; i < number; i++) {
+            int numberOfId = i+1;
+            String id = String.valueOf(numberOfId);
+            frameEntryGame1 entry = new frameEntryGame1(id, controller, number, this);
+            entry.setVisible(true);
+        }
+        
+        
+        
         
     }
 
@@ -43,6 +56,7 @@ public class game1 extends javax.swing.JFrame {
         label_dado2 = new javax.swing.JLabel();
         label_dado1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -82,6 +96,9 @@ public class game1 extends javax.swing.JFrame {
         jButton1.setBounds(40, 430, 140, 90);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 120, 210, 570));
+
+        jPanel2.setBackground(new java.awt.Color(146, 217, 181));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 200, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -132,41 +149,7 @@ public class game1 extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(game1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(game1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(game1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(game1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new game1().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -175,6 +158,7 @@ public class game1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel label_dado1;
     private javax.swing.JLabel label_dado2;
     // End of variables declaration//GEN-END:variables
