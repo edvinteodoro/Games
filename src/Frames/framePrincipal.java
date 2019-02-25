@@ -93,6 +93,11 @@ public class framePrincipal extends javax.swing.JFrame {
         panelMenu.add(jLabel4);
 
         jLabel5.setText("NUMERO 4");
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
         panelMenu.add(jLabel5);
 
         buttonDaniel.setBackground(new java.awt.Color(255, 102, 102));
@@ -158,6 +163,11 @@ public class framePrincipal extends javax.swing.JFrame {
     private void buttonDanielActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDanielActionPerformed
         //djfajflaldjksfdfassssssssssssssssssssssssssss
     }//GEN-LAST:event_buttonDanielActionPerformed
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+       game4 angel = new game4();
+       angel.setVisible(true);
+    }//GEN-LAST:event_jLabel5MouseClicked
 
     /**
      * @param args the command line arguments

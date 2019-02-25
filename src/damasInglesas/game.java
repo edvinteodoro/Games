@@ -17,4 +17,6 @@ public class game {
     coin tablero[][] = new coin[8][8];
     LinkedList<coin> gamer1 = new LinkedList<>();
     LinkedList<coin> gamer2 = new LinkedList<>();
+    
+    
 }
