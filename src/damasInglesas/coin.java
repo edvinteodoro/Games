@@ -5,7 +5,7 @@
  */
 package damasInglesas;
 
-import java.awt.Color;
+import javax.swing.JButton;
 
 /**
  *
@@ -15,15 +15,17 @@ public class coin {
     int number;
     int xPosicion;
     int yPosicion;
-    Color colorCoin;
+    String image;
     boolean queen;
+    JButton boton;
 
-    public coin(int number, int xPosicion, int yPosicion, Color colorCoin, boolean queen) {
+    public coin(int number, int xPosicion, int yPosicion, String image, boolean queen, JButton boton) {
         this.number = number;
         this.xPosicion = xPosicion;
         this.yPosicion = yPosicion;
-        this.colorCoin = colorCoin;
+        this.image = image;
         this.queen = queen;
+        this.boton = boton;
     }
 
     public coin() {
@@ -53,13 +55,14 @@ public class coin {
         this.yPosicion = yPosicion;
     }
 
-    public Color getColorCoin() {
-        return colorCoin;
+    public String getImage() {
+        return image;
     }
 
-    public void setColorCoin(Color colorCoin) {
-        this.colorCoin = colorCoin;
+    public void setImage(String image) {
+        this.image = image;
     }
+
 
     public boolean isQueen() {
         return queen;
@@ -67,6 +70,14 @@ public class coin {
 
     public void setQueen(boolean queen) {
         this.queen = queen;
+    }
+
+    public JButton getBoton() {
+        return boton;
+    }
+
+    public void setBoton(JButton boton) {
+        this.boton = boton;
     }
     
 }

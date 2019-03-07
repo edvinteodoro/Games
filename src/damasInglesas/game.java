@@ -19,4 +19,5 @@ public class game {
     LinkedList<coin> gamer2 = new LinkedList<>();
     
     
+    
 }

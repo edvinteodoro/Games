@@ -8,8 +8,11 @@ package Frames;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Insets;
 import java.util.LinkedList;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
@@ -18,7 +21,6 @@ import javax.swing.JButton;
  */
 public class game4 extends javax.swing.JFrame {
 
-    
     int dimension = 8;
     int pixels = 80;
 
@@ -182,6 +184,7 @@ public class game4 extends javax.swing.JFrame {
         for (int x = 0; x < dimension; x++) {
             for (int y = 0; y < dimension; y++) {
                 JButton auxButton = new JButton();
+
                 if ((x % 2) == 0) {
                     if ((y % 2) == 0) {
                         auxButton.setBackground(Color.black);
@@ -194,6 +197,22 @@ public class game4 extends javax.swing.JFrame {
                     } else {
                         auxButton.setBackground(Color.black);
                     }
+                }
+
+                try {
+                    if ((x % 2 == 0) && (y == 0)) {
+                        //Image imgFicha = ImageIO.read(getClass().getResource("Images/Ficha1.png"));
+                        auxButton.setIcon(new ImageIcon("src/Images/Ficha1.png"));
+                    } else if ((x % 2 == 1) && (y == 1)) {
+                        auxButton.setIcon(new ImageIcon("src/Images/Ficha1.png"));
+                    } else if ((x % 2 == 0) && (y == 6)) {
+                        auxButton.setIcon(new ImageIcon("src/Images/Ficha2.png"));
+                    } else if ((x % 2 == 1) && (y == 7)) {
+                        auxButton.setIcon(new ImageIcon("src/Images/Ficha2.png"));
+                    }
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                    
                 }
                 auxButton.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
