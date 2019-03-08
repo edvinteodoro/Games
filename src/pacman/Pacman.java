@@ -32,7 +32,8 @@ public class Pacman extends JFrame{
 //    public static void main(String[] args) {
 //
 //        EventQueue.invokeLater(new Runnable() {
-//
+// Nuevos comentarios
+    
 //            @Override
 //            public void run() {
 //                Pacman ex = new Pacman();
