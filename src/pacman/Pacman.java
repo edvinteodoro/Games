@@ -6,7 +6,7 @@
 package pacman;
 
 
-import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 /**
  *
