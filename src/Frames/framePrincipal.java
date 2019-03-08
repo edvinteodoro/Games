@@ -108,6 +108,11 @@ public class framePrincipal extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/el ahorcado.jpg"))); // NOI18N
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
         panelMenu.add(jLabel7);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -161,6 +166,11 @@ public class framePrincipal extends javax.swing.JFrame {
     private void buttonDanielActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDanielActionPerformed
         //djfajflaldjksfdfassssssssssssssssssssssssssss
     }//GEN-LAST:event_buttonDanielActionPerformed
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        game6 game6 = new game6();
+        game6.setVisible(true);
+    }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
      * @param args the command line arguments
