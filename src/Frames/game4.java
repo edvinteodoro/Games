@@ -124,6 +124,11 @@ public class game4 extends javax.swing.JFrame {
         });
 
         deadHeatButton.setText("Dead Heat");
+        deadHeatButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deadHeatButtonActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Options");
 
@@ -210,6 +215,16 @@ public class game4 extends javax.swing.JFrame {
         principal.setVisible(true);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    private void deadHeatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deadHeatButtonActionPerformed
+        if (playing == idGamer1) {
+            JOptionPane.showMessageDialog(this, "Won " + newGame.getName2(), "End of game", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Won " + newGame.getName1(), "End of game", JOptionPane.INFORMATION_MESSAGE);
+        }
+        this.setVisible(false);
+        principal.setVisible(true);
+    }//GEN-LAST:event_deadHeatButtonActionPerformed
+
     private void showInitTurn() {
         if (playing == idGamer1) {
             JOptionPane.showMessageDialog(this, "it's the turn of " + newGame.getName1(), "Turn", JOptionPane.INFORMATION_MESSAGE);
@@ -253,7 +268,7 @@ public class game4 extends javax.swing.JFrame {
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "It's opponent's coin", "Error", JOptionPane.ERROR_MESSAGE);
-                        temporalBotton = null;
+                    temporalBotton = null;
                 }
             } else if ((temporalBotton != null) && buttonIsAvailable(boton)) {
                 if (newGame.isGamerCoin(playing, temporalBotton)) {
@@ -267,7 +282,7 @@ public class game4 extends javax.swing.JFrame {
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "It's opponent's coin", "Error", JOptionPane.ERROR_MESSAGE);
-                        temporalBotton = null;
+                    temporalBotton = null;
                 }
             }
         } catch (InputsVaciosException | HeadlessException e) {
@@ -331,6 +346,10 @@ public class game4 extends javax.swing.JFrame {
             }
         }
         System.out.println("pixeles agregados");
+    }
+
+    public void resetgame() {
+
     }
 
     private boolean buttonIsAvailable(JButton boton) {
