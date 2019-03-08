@@ -5,6 +5,7 @@
  */
 package Frames;
 
+import ahorcado.manejadorAhorcado;
 import java.awt.event.KeyEvent;
 
 /**
@@ -12,11 +13,14 @@ import java.awt.event.KeyEvent;
  * @author jonyasus
  */
 public class game6 extends javax.swing.JFrame {
+    
+     manejadorAhorcado operaciones;
 
     /**
      * Creates new form game6
      */
-    public game6() {
+    public game6(manejadorAhorcado manejador) {
+        this.operaciones = manejador;
         initComponents();
     }
 
@@ -93,6 +97,11 @@ public class game6 extends javax.swing.JFrame {
         jButton2.setText("¡Probar!");
 
         newGame.setText("Nuevo Juego");
+        newGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newGameActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(newGame);
 
         setJMenuBar(jMenuBar1);
@@ -181,6 +190,10 @@ public class game6 extends javax.swing.JFrame {
         }
         keyTyped(evt);
     }//GEN-LAST:event_letraIngresadaKeyTyped
+
+    private void newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newGameActionPerformed
 
     public void keyTyped(KeyEvent e) {
         if (letraIngresada.getText().length() == 1) {

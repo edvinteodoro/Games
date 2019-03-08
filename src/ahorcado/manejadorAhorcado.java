@@ -14,7 +14,7 @@ public class manejadorAhorcado {
     ArrayList<Character> letrasEnPantalla;
     ArrayList<String> pistas;
     int cantidadVidas;
-    int cantidadPistasUsadas;
+    int cantidadPistasUsadas = 0;
 
     private void obtenerPalabraPorLetras(String textoEntrada) {
         for (int i = 0; i < textoEntrada.length(); i++) {
@@ -51,6 +51,25 @@ public class manejadorAhorcado {
             textoEnPantalla.concat(letraString);
         }
         return textoEnPantalla;
+    }
+    
+    private void indexLetraACambiar(String letra){
+        char caracter = letra.charAt(0);
+        for (int i = 0; i < letrasDePalabra.size(); i++) {
+            if (caracter == letrasDePalabra.get(i)){
+            letrasEnPantalla.set(i, caracter);
+            } 
+        }
+    }
+    
+    private void mostrarPista(){
+        int numPista = cantidadPistasUsadas+1;
+        JOptionPane.showMessageDialog(null, "Pista #"+numPista+": "+pistas.get(cantidadPistasUsadas));
+        cantidadPistasUsadas++;
+    }
+    
+    private void agregarPista(String pista){
+        pistas.add(pista);
     }
 
 }
