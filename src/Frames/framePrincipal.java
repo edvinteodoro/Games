@@ -1,6 +1,8 @@
 package Frames;
 
-import game2.frameGame2;
+import game2.*;
+import main.run;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,6 +23,9 @@ public class framePrincipal extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
          }
+
+    public framePrincipal(run run) { //To change body of generated methods, choose Tools | Templates.
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -158,12 +163,24 @@ public class framePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonDanielActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //game2 game2=new game2();
-        //game2.setVisible(true);
-        frameGame2 game1=new frameGame2();
-        game1.setVisible(true);
+        Runnable ejectar = new ejecutar();
+        Thread hilo=new Thread(ejectar);
+        hilo.start();
+       
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    public static void iniciar(){
+     // Se crea el objeto "Juego"
+        // Se crea el objeto "Juego"
+        Juego elJuego = new Juego();
+        //Repite infinitamente (cuando el usuario cierre la ventana, internamente
+        //se llamará a System.exit() y se saldrá de este bucle)...
+        //while(false) {
+            //Cuando se sale de la presentación, empieza la partida
+            elJuego.partida();
+            //cuando se acaba la partida, se muestra el mensaje de fin de juego
+            elJuego.finDeJuego();
+        //}
+}
     /**
      * @param args the command line arguments
      */
