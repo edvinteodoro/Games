@@ -5,8 +5,6 @@
  */
 package damasInglesas;
 
-import javax.swing.JButton;
-
 /**
  *
  * @author angelrg
@@ -15,17 +13,14 @@ public class coin {
     int number;
     int xPosicion;
     int yPosicion;
-    String image;
     boolean queen;
-    JButton boton;
+    boolean alive;
 
-    public coin(int number, int xPosicion, int yPosicion, String image, boolean queen, JButton boton) {
-        this.number = number;
+    public coin(int xPosicion, int yPosicion, boolean alive) {
         this.xPosicion = xPosicion;
         this.yPosicion = yPosicion;
-        this.image = image;
-        this.queen = queen;
-        this.boton = boton;
+        this.alive = alive;
+        this.queen = false;
     }
 
     public coin() {
@@ -55,29 +50,12 @@ public class coin {
         this.yPosicion = yPosicion;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-
     public boolean isQueen() {
         return queen;
     }
 
     public void setQueen(boolean queen) {
         this.queen = queen;
-    }
-
-    public JButton getBoton() {
-        return boton;
-    }
-
-    public void setBoton(JButton boton) {
-        this.boton = boton;
     }
     
 }

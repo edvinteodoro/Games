@@ -5,6 +5,7 @@
  */
 package Frames;
 
+import backEnd.exceptions.InputsVaciosException;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -14,6 +15,9 @@ import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import damasInglesas.*;
+import java.awt.HeadlessException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,14 +25,23 @@ import javax.swing.JButton;
  */
 public class game4 extends javax.swing.JFrame {
 
-    int dimension = 8;
-    int pixels = 80;
+    private game newGame;
+    public final int dimension = 8;
+    private final int pixels = 80;
+    public final int idGamer1 = 0;
+    public final int idGamer2 = 1;
+    public final int noId = 2;
+    private framePrincipal principal;
+    private JButton temporalBotton;
 
     /**
      * Creates new form game4
      */
-    public game4() {
+    public game4(framePrincipal p) {
+        this.principal = p;
         initComponents();
+        temporalBotton = null;
+        newGame = new game(this);
         addPixels(boardPanel);
     }
 
@@ -59,7 +72,7 @@ public class game4 extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Damas Inglesas");
 
         javax.swing.GroupLayout boardPanelLayout = new javax.swing.GroupLayout(boardPanel);
         boardPanel.setLayout(boardPanelLayout);
@@ -93,6 +106,11 @@ public class game4 extends javax.swing.JFrame {
         passButton.setText("Pass");
 
         cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         deadHeatButton.setText("Dead Heat");
 
@@ -173,6 +191,30 @@ public class game4 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.setVisible(false);
+        principal.setVisible(true);
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void selectOrMove(java.awt.event.ActionEvent ev, JButton boton) {
+        try {
+            if (((temporalBotton != null) && (temporalBotton == boton)) || ((temporalBotton != null) && !buttonIsAvailable(boton))) {
+                temporalBotton = null;
+            }else if ((temporalBotton == null) && !buttonIsAvailable(boton)) {
+                temporalBotton = boton;
+            } else if ((temporalBotton != null) && buttonIsAvailable(boton)) {
+                if (newGame.canSimpleCoinMove(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
+                    newGame.simpleCoinMove(temporalBotton, boton);
+                    temporalBotton = null;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Movimiento Invalido", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (InputsVaciosException | HeadlessException e) {
+            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void addPixels(Container pane) {
         //pane.setLayout(null);
         Dimension panelDimension = new Dimension(dimension * pixels, dimension * pixels);
@@ -184,6 +226,7 @@ public class game4 extends javax.swing.JFrame {
         for (int x = 0; x < dimension; x++) {
             for (int y = 0; y < dimension; y++) {
                 JButton auxButton = new JButton();
+                coin auxCoin = new coin(x, y, true);
 
                 if ((x % 2) == 0) {
                     if ((y % 2) == 0) {
@@ -200,23 +243,26 @@ public class game4 extends javax.swing.JFrame {
                 }
 
                 try {
-                    if ((x % 2 == 0) && (y == 0)) {
-                        //Image imgFicha = ImageIO.read(getClass().getResource("Images/Ficha1.png"));
+                    if (((x % 2 == 0) && ((y == 0)|| (y == 2))) || ((x % 2 == 1) && (y == 1))) {
                         auxButton.setIcon(new ImageIcon("src/Images/Ficha1.png"));
-                    } else if ((x % 2 == 1) && (y == 1)) {
-                        auxButton.setIcon(new ImageIcon("src/Images/Ficha1.png"));
-                    } else if ((x % 2 == 0) && (y == 6)) {
+                        auxCoin.setNumber(idGamer1);
+                        newGame.addCoinToGamer1(auxCoin);
+                        newGame.addToTablero(new tableSquare(auxButton, idGamer1), x, y);
+                    } else if (((x % 2 == 0) && (y == 6)) || ((x % 2 == 1) && ((y == 7)||(y == 5)))) {
                         auxButton.setIcon(new ImageIcon("src/Images/Ficha2.png"));
-                    } else if ((x % 2 == 1) && (y == 7)) {
-                        auxButton.setIcon(new ImageIcon("src/Images/Ficha2.png"));
+                        auxCoin.setNumber(idGamer2);
+                        newGame.addCoinToGamer2(auxCoin);
+                        newGame.addToTablero(new tableSquare(auxButton, idGamer2), x, y);
+                    } else {
+                        newGame.addToTablero(new tableSquare(auxButton, noId), x, y);
                     }
                 } catch (Exception ex) {
                     System.out.println(ex);
-                    
+
                 }
                 auxButton.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        //funcion para el cambio de fichas
+                        selectOrMove(evt, auxButton);
                     }
                 });
                 pane.add(auxButton);
@@ -224,6 +270,24 @@ public class game4 extends javax.swing.JFrame {
             }
         }
         System.out.println("pixeles agregados");
+    }
+
+    private boolean buttonIsAvailable(JButton boton) {
+        return (newGame.getTableSquare(getXButton(boton), getYButton(boton)).getIdGamer() == noId);
+    }
+
+    private int buttonOwner(JButton boton) {
+        return (newGame.getTableSquare(getXButton(boton), getYButton(boton)).getIdGamer());
+    }
+
+    public int getXButton(JButton boton) {
+        Insets insets = boardPanel.getInsets();
+        return ((boton.getLocation().x - insets.left) / pixels);
+    }
+
+    public int getYButton(JButton boton) {
+        Insets insets = boardPanel.getInsets();
+        return ((boton.getLocation().y - insets.top) / pixels);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

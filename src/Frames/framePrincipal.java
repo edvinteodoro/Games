@@ -165,8 +165,9 @@ public class framePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonDanielActionPerformed
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-       game4 angel = new game4();
+       game4 angel = new game4(this);
        angel.setVisible(true);
+       this.setVisible(false);
     }//GEN-LAST:event_jLabel5MouseClicked
 
     /**
