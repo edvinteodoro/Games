@@ -247,7 +247,6 @@ public class game4 extends javax.swing.JFrame {
                     if (newGame.canKillSimpleCoin(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
                         newGame.simpleCoinKill(temporalBotton, boton);
                         temporalBotton = null;
-                        changeTurn();
                     } else {
                         JOptionPane.showMessageDialog(this, "No se puede elminar", "Error", JOptionPane.ERROR_MESSAGE);
                         temporalBotton = null;

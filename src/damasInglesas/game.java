@@ -27,10 +27,10 @@ public class game {
     public game(game4 gm) {
         this.game = gm;
     }
-    
-    public boolean isGamerCoin(int gamer, JButton boton){
+
+    public boolean isGamerCoin(int gamer, JButton boton) {
         tableSquare aux = tablero[game.getXButton(boton)][game.getYButton(boton)];
-        return (aux.getIdGamer() == gamer); 
+        return (aux.getIdGamer() == gamer);
     }
 
     /**
@@ -149,15 +149,25 @@ public class game {
         if (game.idGamer1 == auxTSActual.idGamer) {
             if (getGamer1Coin(game.getXButton(acualButton), game.getYButton(acualButton)) != null) {
                 tempCoin = getGamer1Coin(game.getXButton(acualButton), game.getYButton(acualButton));
-                tempCoin.setxPosicion(game.getXButton(auxTSFinal.getBoton()));
-                tempCoin.setyPosicion(game.getYButton(auxTSFinal.getBoton()));
-                auxTSActual.setIdGamer(game.noId);
-                auxTSActual.getBoton().setIcon(null);
-                auxTSNext.setIdGamer(game.noId);
-                auxTSNext.getBoton().setIcon(null);
-                auxTSFinal.setIdGamer(game.idGamer1);
-                auxTSFinal.getBoton().setIcon(new ImageIcon("src/Images/Ficha1.png"));
-                return auxTSActual.getBoton();
+                if (!tempCoin.isQueen()) {
+                    tempCoin.setxPosicion(game.getXButton(auxTSFinal.getBoton()));
+                    tempCoin.setyPosicion(game.getYButton(auxTSFinal.getBoton()));
+                    auxTSActual.setIdGamer(game.noId);
+                    auxTSActual.getBoton().setIcon(null);
+                    auxTSNext.setIdGamer(game.noId);
+                    auxTSNext.getBoton().setIcon(null);
+                    auxTSFinal.setIdGamer(game.idGamer1);
+                    if (tempCoin.getyPosicion() == 7) {
+                        tempCoin.setQueen(true);
+                        auxTSFinal.getBoton().setIcon(new ImageIcon("src/Images/Ficha4.png"));
+                    } else {
+                        auxTSFinal.getBoton().setIcon(new ImageIcon("src/Images/Ficha1.png"));
+                    }
+                    return auxTSActual.getBoton();
+                } else {
+                    //queen kill
+                    return null;
+                }
             } else {
                 throw new InputsVaciosException("No existe la ficha");
             }
@@ -165,14 +175,24 @@ public class game {
         } else if (game.idGamer2 == auxTSActual.idGamer) {
             if (getGamer2Coin(game.getXButton(acualButton), game.getYButton(acualButton)) != null) {
                 tempCoin = getGamer2Coin(game.getXButton(acualButton), game.getYButton(acualButton));
-                tempCoin.setxPosicion(game.getXButton(auxTSFinal.getBoton()));
-                tempCoin.setyPosicion(game.getYButton(auxTSFinal.getBoton()));
-                auxTSActual.setIdGamer(game.noId);
-                auxTSActual.getBoton().setIcon(null);
-                auxTSNext.setIdGamer(game.noId);
-                auxTSNext.getBoton().setIcon(null);
-                auxTSFinal.setIdGamer(game.idGamer2);
-                auxTSFinal.getBoton().setIcon(new ImageIcon("src/Images/Ficha2.png"));
+                if (!tempCoin.isQueen()) {
+                    tempCoin.setxPosicion(game.getXButton(auxTSFinal.getBoton()));
+                    tempCoin.setyPosicion(game.getYButton(auxTSFinal.getBoton()));
+                    auxTSActual.setIdGamer(game.noId);
+                    auxTSActual.getBoton().setIcon(null);
+                    auxTSNext.setIdGamer(game.noId);
+                    auxTSNext.getBoton().setIcon(null);
+                    auxTSFinal.setIdGamer(game.idGamer2);
+                    if (tempCoin.getyPosicion() == 0) {
+                        tempCoin.setQueen(true);
+                        auxTSFinal.getBoton().setIcon(new ImageIcon("src/Images/Ficha3.png"));
+                    } else {
+                        auxTSFinal.getBoton().setIcon(new ImageIcon("src/Images/Ficha2.png"));
+                    }
+                } else {
+                    //queen kill
+                    return null;
+                }
                 return auxTSActual.getBoton();
             } else {
                 throw new InputsVaciosException("No existe la ficha");
@@ -189,12 +209,21 @@ public class game {
         if (game.idGamer1 == auxTSActual.idGamer) {
             if (getGamer1Coin(game.getXButton(acualButton), game.getYButton(acualButton)) != null) {
                 tempCoin = getGamer1Coin(game.getXButton(acualButton), game.getYButton(acualButton));
-                tempCoin.setxPosicion(game.getXButton(nextButton));
-                tempCoin.setyPosicion(game.getYButton(nextButton));
-                auxTSActual.setIdGamer(game.noId);
-                auxTSActual.getBoton().setIcon(null);
-                auxTSNext.setIdGamer(game.idGamer1);
-                auxTSNext.getBoton().setIcon(new ImageIcon("src/Images/Ficha1.png"));
+                if (!tempCoin.isQueen()) {
+                    tempCoin.setxPosicion(game.getXButton(nextButton));
+                    tempCoin.setyPosicion(game.getYButton(nextButton));
+                    auxTSActual.setIdGamer(game.noId);
+                    auxTSActual.getBoton().setIcon(null);
+                    auxTSNext.setIdGamer(game.idGamer1);
+                    if (tempCoin.getyPosicion() == 7) {
+                        auxTSNext.getBoton().setIcon(new ImageIcon("src/Images/Ficha4.png"));
+                        tempCoin.setQueen(true);
+                    } else {
+                        auxTSNext.getBoton().setIcon(new ImageIcon("src/Images/Ficha1.png"));
+                    }
+                } else {
+                    //to move the queen
+                }
             } else {
                 throw new InputsVaciosException("No existe la ficha");
             }
@@ -202,12 +231,21 @@ public class game {
         } else if (game.idGamer2 == auxTSActual.idGamer) {
             if (getGamer2Coin(game.getXButton(acualButton), game.getYButton(acualButton)) != null) {
                 tempCoin = getGamer2Coin(game.getXButton(acualButton), game.getYButton(acualButton));
-                tempCoin.setxPosicion(game.getXButton(nextButton));
-                tempCoin.setyPosicion(game.getYButton(nextButton));
-                auxTSActual.setIdGamer(game.noId);
-                auxTSActual.getBoton().setIcon(null);
-                auxTSNext.setIdGamer(game.idGamer2);
-                auxTSNext.getBoton().setIcon(new ImageIcon("src/Images/Ficha2.png"));
+                if (!tempCoin.isQueen()) {
+                    tempCoin.setxPosicion(game.getXButton(nextButton));
+                    tempCoin.setyPosicion(game.getYButton(nextButton));
+                    auxTSActual.setIdGamer(game.noId);
+                    auxTSActual.getBoton().setIcon(null);
+                    auxTSNext.setIdGamer(game.idGamer2);
+                    if (tempCoin.getyPosicion() == 0) {
+                        auxTSNext.getBoton().setIcon(new ImageIcon("src/Images/Ficha3.png"));
+                        tempCoin.setQueen(true);
+                    } else {
+                        auxTSNext.getBoton().setIcon(new ImageIcon("src/Images/Ficha2.png"));
+                    }
+                } else {
+                    //to move the queen
+                }
             } else {
                 throw new InputsVaciosException("No existe la ficha");
             }
