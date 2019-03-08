@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import damasInglesas.*;
 import java.awt.HeadlessException;
+import java.util.Random;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,24 +26,34 @@ import javax.swing.JOptionPane;
  */
 public class game4 extends javax.swing.JFrame {
 
-    private game newGame;
+    public game newGame;
     public final int dimension = 8;
     private final int pixels = 80;
     public final int idGamer1 = 0;
     public final int idGamer2 = 1;
     public final int noId = 2;
+    public int playing;
+    Random rand = new Random();
     private framePrincipal principal;
     private JButton temporalBotton;
 
     /**
      * Creates new form game4
      */
-    public game4(framePrincipal p) {
+    public game4(framePrincipal p, String name1, String name2) {
         this.principal = p;
         initComponents();
         temporalBotton = null;
         newGame = new game(this);
+        newGame.setName1(name1);
+        newGame.setName2(name2);
+        player1Label.setText(name1);
+        player2Label.setText(name2);
+        image1Button.setIcon(new ImageIcon("src/Images/Ficha1.png"));
+        image2Button.setIcon(new ImageIcon("src/Images/Ficha2.png"));
         addPixels(boardPanel);
+        playing = randomInit();
+        showInitTurn();
     }
 
     /**
@@ -58,12 +69,13 @@ public class game4 extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         player1Label = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        nombre2Label = new javax.swing.JLabel();
+        player2Label = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         turnoNomLabel = new javax.swing.JLabel();
-        passButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         deadHeatButton = new javax.swing.JButton();
+        image1Button = new javax.swing.JButton();
+        image2Button = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         newMenuItem = new javax.swing.JMenuItem();
@@ -95,16 +107,14 @@ public class game4 extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Cantarell", 1, 16)); // NOI18N
         jLabel3.setText("Player 2");
 
-        nombre2Label.setFont(new java.awt.Font("Cantarell", 0, 16)); // NOI18N
-        nombre2Label.setText("Nombre 2");
+        player2Label.setFont(new java.awt.Font("Cantarell", 0, 16)); // NOI18N
+        player2Label.setText("Nombre 2");
 
         jLabel2.setFont(new java.awt.Font("Cantarell", 1, 16)); // NOI18N
         jLabel2.setText("Turn:");
 
         turnoNomLabel.setFont(new java.awt.Font("Cantarell", 0, 16)); // NOI18N
         turnoNomLabel.setText("Turno");
-
-        passButton.setText("Pass");
 
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -147,18 +157,19 @@ public class game4 extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cancelButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(passButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(deadHeatButton))
                     .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(turnoNomLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nombre2Label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                    .addComponent(player1Label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(turnoNomLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(player2Label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                        .addComponent(player1Label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(image1Button, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(image2Button, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -171,18 +182,20 @@ public class game4 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cancelButton)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(deadHeatButton)
-                                .addComponent(passButton))))
+                            .addComponent(deadHeatButton)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(player1Label)
                         .addGap(18, 18, 18)
+                        .addComponent(image1Button, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(nombre2Label)
-                        .addGap(35, 35, 35)
+                        .addComponent(player2Label)
+                        .addGap(18, 18, 18)
+                        .addComponent(image2Button, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(turnoNomLabel)))
@@ -197,6 +210,31 @@ public class game4 extends javax.swing.JFrame {
         principal.setVisible(true);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    private void showInitTurn(){
+        if (playing == idGamer1) {
+            JOptionPane.showMessageDialog(this, "it's the turn of "+newGame.getName1(), "Turn", JOptionPane.INFORMATION_MESSAGE);
+            turnoNomLabel.setText(newGame.getName1());
+        } else {
+            JOptionPane.showMessageDialog(this, "it's the turn of "+newGame.getName2(), "Turn", JOptionPane.INFORMATION_MESSAGE);
+            turnoNomLabel.setText(newGame.getName2());
+        }
+    }
+    private int  randomInit(){
+        return rand.nextInt(2);
+    }
+    
+    public void changeTurn(){
+        if (playing == idGamer1) {
+            JOptionPane.showMessageDialog(this, "it's the turn of "+newGame.getName2(), "Turn", JOptionPane.INFORMATION_MESSAGE);
+            turnoNomLabel.setText(newGame.getName2());
+            playing = idGamer2;
+        } else {
+            JOptionPane.showMessageDialog(this, "it's the turn of "+newGame.getName1(), "Turn", JOptionPane.INFORMATION_MESSAGE);
+            turnoNomLabel.setText(newGame.getName1());
+            playing = idGamer1;
+        }
+    }
+    
     private void selectOrMove(java.awt.event.ActionEvent ev, JButton boton) {
         try {
             if ((temporalBotton != null) && (temporalBotton == boton)) {
@@ -207,6 +245,7 @@ public class game4 extends javax.swing.JFrame {
                 if (newGame.canKillSimpleCoin(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
                     newGame.simpleCoinKill(temporalBotton, boton);
                     temporalBotton = null;
+                    changeTurn();
                 } else {
                     JOptionPane.showMessageDialog(this, "No se puede elminar", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -214,6 +253,7 @@ public class game4 extends javax.swing.JFrame {
                 if (newGame.canSimpleCoinMove(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
                     newGame.simpleCoinMove(temporalBotton, boton);
                     temporalBotton = null;
+                    changeTurn();
                 } else {
                     JOptionPane.showMessageDialog(this, "Movimiento Invalido", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -298,6 +338,7 @@ public class game4 extends javax.swing.JFrame {
         Insets insets = boardPanel.getInsets();
         return ((boton.getLocation().y - insets.top) / pixels);
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
@@ -305,6 +346,8 @@ public class game4 extends javax.swing.JFrame {
     private javax.swing.JPanel boardPanel;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton deadHeatButton;
+    private javax.swing.JButton image1Button;
+    private javax.swing.JButton image2Button;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -312,9 +355,8 @@ public class game4 extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem newMenuItem;
-    private javax.swing.JLabel nombre2Label;
-    private javax.swing.JButton passButton;
     private javax.swing.JLabel player1Label;
+    private javax.swing.JLabel player2Label;
     private javax.swing.JMenuItem restartMenuItem;
     private javax.swing.JLabel turnoNomLabel;
     // End of variables declaration//GEN-END:variables

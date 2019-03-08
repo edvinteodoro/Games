@@ -71,20 +71,22 @@
                   <Group type="102" attributes="0">
                       <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="passButton" min="-2" pref="75" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="deadHeatButton" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="boardPanel" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="turnoNomLabel" alignment="0" max="32767" attributes="0"/>
-                  <Component id="nombre2Label" alignment="0" pref="114" max="32767" attributes="0"/>
-                  <Component id="player1Label" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="turnoNomLabel" alignment="0" max="32767" attributes="0"/>
+                      <Component id="player2Label" alignment="0" pref="114" max="32767" attributes="0"/>
+                      <Component id="player1Label" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="image1Button" min="-2" pref="80" max="-2" attributes="0"/>
+                  <Component id="image2Button" min="-2" pref="80" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -100,10 +102,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="deadHeatButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="passButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="deadHeatButton" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
@@ -111,10 +110,14 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="player1Label" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="image1Button" min="-2" pref="80" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="nombre2Label" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="player2Label" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="image2Button" min="-2" pref="80" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="turnoNomLabel" min="-2" max="-2" attributes="0"/>
@@ -165,7 +168,7 @@
         <Property name="text" type="java.lang.String" value="Player 2"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="nombre2Label">
+    <Component class="javax.swing.JLabel" name="player2Label">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Cantarell" size="16" style="0"/>
@@ -189,11 +192,6 @@
         <Property name="text" type="java.lang.String" value="Turno"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="passButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Pass"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="cancelButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancel"/>
@@ -206,6 +204,10 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Dead Heat"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="image1Button">
+    </Component>
+    <Component class="javax.swing.JButton" name="image2Button">
     </Component>
   </SubComponents>
 </Form>

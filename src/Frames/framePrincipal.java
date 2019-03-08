@@ -1,11 +1,12 @@
 package Frames;
 
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author teodoro
@@ -18,7 +19,7 @@ public class framePrincipal extends javax.swing.JFrame {
     public framePrincipal() {
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-         }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -156,8 +157,8 @@ public class framePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-       game2 game2=new game2();
-       game2.setVisible(true);
+        game2 game2 = new game2();
+        game2.setVisible(true);
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void buttonDanielActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDanielActionPerformed
@@ -165,15 +166,20 @@ public class framePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonDanielActionPerformed
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-       game4 angel = new game4(this);
-       angel.setVisible(true);
-       this.setVisible(false);
+
+        String name1 = JOptionPane.showInputDialog(this, "Nombre Jugador 1:", "Datos", JOptionPane.QUESTION_MESSAGE);
+        String name2 = JOptionPane.showInputDialog(this, "Nombre Jugador 2:", "Datos", JOptionPane.QUESTION_MESSAGE);
+
+        if (!name1.replaceAll(" ", "").isEmpty() && !name2.replaceAll(" ", "").isEmpty()) {
+            game4 angel = new game4(this, name1, name2);
+            angel.setVisible(true);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_jLabel5MouseClicked
 
     /**
      * @param args the command line arguments
      */
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonDaniel;
