@@ -27,6 +27,11 @@ public class game {
     public game(game4 gm) {
         this.game = gm;
     }
+    
+    public boolean isGamerCoin(int gamer, JButton boton){
+        tableSquare aux = tablero[game.getXButton(boton)][game.getYButton(boton)];
+        return (aux.getIdGamer() == gamer); 
+    }
 
     /**
      * This method had been designed to verify if a coin is able to move along

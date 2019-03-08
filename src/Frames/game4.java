@@ -210,31 +210,32 @@ public class game4 extends javax.swing.JFrame {
         principal.setVisible(true);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void showInitTurn(){
+    private void showInitTurn() {
         if (playing == idGamer1) {
-            JOptionPane.showMessageDialog(this, "it's the turn of "+newGame.getName1(), "Turn", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "it's the turn of " + newGame.getName1(), "Turn", JOptionPane.INFORMATION_MESSAGE);
             turnoNomLabel.setText(newGame.getName1());
         } else {
-            JOptionPane.showMessageDialog(this, "it's the turn of "+newGame.getName2(), "Turn", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "it's the turn of " + newGame.getName2(), "Turn", JOptionPane.INFORMATION_MESSAGE);
             turnoNomLabel.setText(newGame.getName2());
         }
     }
-    private int  randomInit(){
+
+    private int randomInit() {
         return rand.nextInt(2);
     }
-    
-    public void changeTurn(){
+
+    public void changeTurn() {
         if (playing == idGamer1) {
-            JOptionPane.showMessageDialog(this, "it's the turn of "+newGame.getName2(), "Turn", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "it's the turn of " + newGame.getName2(), "Turn", JOptionPane.INFORMATION_MESSAGE);
             turnoNomLabel.setText(newGame.getName2());
             playing = idGamer2;
         } else {
-            JOptionPane.showMessageDialog(this, "it's the turn of "+newGame.getName1(), "Turn", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "it's the turn of " + newGame.getName1(), "Turn", JOptionPane.INFORMATION_MESSAGE);
             turnoNomLabel.setText(newGame.getName1());
             playing = idGamer1;
         }
     }
-    
+
     private void selectOrMove(java.awt.event.ActionEvent ev, JButton boton) {
         try {
             if ((temporalBotton != null) && (temporalBotton == boton)) {
@@ -242,20 +243,32 @@ public class game4 extends javax.swing.JFrame {
             } else if ((temporalBotton == null) && !buttonIsAvailable(boton)) {
                 temporalBotton = boton;
             } else if (((temporalBotton != null) && !buttonIsAvailable(boton))) {
-                if (newGame.canKillSimpleCoin(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
-                    newGame.simpleCoinKill(temporalBotton, boton);
-                    temporalBotton = null;
-                    changeTurn();
+                if (newGame.isGamerCoin(playing, temporalBotton)) {
+                    if (newGame.canKillSimpleCoin(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
+                        newGame.simpleCoinKill(temporalBotton, boton);
+                        temporalBotton = null;
+                        changeTurn();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No se puede elminar", "Error", JOptionPane.ERROR_MESSAGE);
+                        temporalBotton = null;
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(this, "No se puede elminar", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "It's opponent's coin", "Error", JOptionPane.ERROR_MESSAGE);
+                        temporalBotton = null;
                 }
             } else if ((temporalBotton != null) && buttonIsAvailable(boton)) {
-                if (newGame.canSimpleCoinMove(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
-                    newGame.simpleCoinMove(temporalBotton, boton);
-                    temporalBotton = null;
-                    changeTurn();
+                if (newGame.isGamerCoin(playing, temporalBotton)) {
+                    if (newGame.canSimpleCoinMove(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
+                        newGame.simpleCoinMove(temporalBotton, boton);
+                        temporalBotton = null;
+                        changeTurn();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Movimiento Invalido", "Error", JOptionPane.ERROR_MESSAGE);
+                        temporalBotton = null;
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Movimiento Invalido", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "It's opponent's coin", "Error", JOptionPane.ERROR_MESSAGE);
+                        temporalBotton = null;
                 }
             }
         } catch (InputsVaciosException | HeadlessException e) {
@@ -338,7 +351,7 @@ public class game4 extends javax.swing.JFrame {
         Insets insets = boardPanel.getInsets();
         return ((boton.getLocation().y - insets.top) / pixels);
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
