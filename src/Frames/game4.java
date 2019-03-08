@@ -72,6 +72,7 @@ public class game4 extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Damas Inglesas");
 
         javax.swing.GroupLayout boardPanelLayout = new javax.swing.GroupLayout(boardPanel);
@@ -198,10 +199,17 @@ public class game4 extends javax.swing.JFrame {
 
     private void selectOrMove(java.awt.event.ActionEvent ev, JButton boton) {
         try {
-            if (((temporalBotton != null) && (temporalBotton == boton)) || ((temporalBotton != null) && !buttonIsAvailable(boton))) {
+            if ((temporalBotton != null) && (temporalBotton == boton)) {
                 temporalBotton = null;
-            }else if ((temporalBotton == null) && !buttonIsAvailable(boton)) {
+            } else if ((temporalBotton == null) && !buttonIsAvailable(boton)) {
                 temporalBotton = boton;
+            } else if (((temporalBotton != null) && !buttonIsAvailable(boton))) {
+                if (newGame.canKillSimpleCoin(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
+                    newGame.simpleCoinKill(temporalBotton, boton);
+                    temporalBotton = null;
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se puede elminar", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } else if ((temporalBotton != null) && buttonIsAvailable(boton)) {
                 if (newGame.canSimpleCoinMove(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
                     newGame.simpleCoinMove(temporalBotton, boton);
@@ -212,6 +220,7 @@ public class game4 extends javax.swing.JFrame {
             }
         } catch (InputsVaciosException | HeadlessException e) {
             JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+            temporalBotton = null;
         }
     }
 
@@ -243,12 +252,12 @@ public class game4 extends javax.swing.JFrame {
                 }
 
                 try {
-                    if (((x % 2 == 0) && ((y == 0)|| (y == 2))) || ((x % 2 == 1) && (y == 1))) {
+                    if (((x % 2 == 0) && ((y == 0) || (y == 2))) || ((x % 2 == 1) && (y == 1))) {
                         auxButton.setIcon(new ImageIcon("src/Images/Ficha1.png"));
                         auxCoin.setNumber(idGamer1);
                         newGame.addCoinToGamer1(auxCoin);
                         newGame.addToTablero(new tableSquare(auxButton, idGamer1), x, y);
-                    } else if (((x % 2 == 0) && (y == 6)) || ((x % 2 == 1) && ((y == 7)||(y == 5)))) {
+                    } else if (((x % 2 == 0) && (y == 6)) || ((x % 2 == 1) && ((y == 7) || (y == 5)))) {
                         auxButton.setIcon(new ImageIcon("src/Images/Ficha2.png"));
                         auxCoin.setNumber(idGamer2);
                         newGame.addCoinToGamer2(auxCoin);
