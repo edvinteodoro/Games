@@ -31,10 +31,9 @@ public class framePrincipalGame1 extends javax.swing.JFrame {
             int numberOfId = i+1;
             String id = String.valueOf(numberOfId);
             frameEntryGame1 entry = new frameEntryGame1(id, controller, number, this);
+            controller.saveEntryFrame(entry);
             entry.setVisible(true);
         }
-        
-        
         
         
     }

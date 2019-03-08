@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class playerController {
     
     ArrayList<player> listOfPlayers = new ArrayList<>();
-    
+    ArrayList<frameEntryGame1> listOfEntryFrames = new ArrayList<>();
     
     
     public void enterPlayer(String name, String icon){
@@ -35,6 +35,17 @@ public class playerController {
         return number;
     }
     
+    public void saveEntryFrame(frameEntryGame1 frame){
+        listOfEntryFrames.add(frame);
+    }
+    
+    public void closeEntryFrames(){
+        for (int i = 0; i < listOfEntryFrames.size(); i++) {
+            listOfEntryFrames.get(i).dispose();
+        }
+        listOfEntryFrames.clear();
+        
+    }
     
     
 }
