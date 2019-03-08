@@ -204,10 +204,11 @@ public class Juego {
             //aprieta la barra espaciadora sin querer (porque, por ejemplo, estaba
             //disparando cuando le tocó la bola).
             
-            
+           
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
           // Logger.getLogger(Juego.class.getName()).log(Level.SEVERE, null, ex);
         }
+            ventana.marcoVentana.setVisible(false);
     }
 }

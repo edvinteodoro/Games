@@ -34,7 +34,7 @@ public class Ventana implements KeyListener, WindowListener {
     /**
      * JFrame es un objeto que maneja una ventana de pantalla.
      */
-    private JFrame marcoVentana = null;
+    public JFrame marcoVentana = null;
 
     /**
      * Las siguientes variables booleanas guardan el estado de algunas teclas.
