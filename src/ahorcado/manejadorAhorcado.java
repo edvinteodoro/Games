@@ -16,14 +16,14 @@ public class manejadorAhorcado {
     int cantidadVidas;
     int cantidadPistasUsadas = 0;
 
-    private void obtenerPalabraPorLetras(String textoEntrada) {
+    public void obtenerPalabraPorLetras(String textoEntrada) {
         for (int i = 0; i < textoEntrada.length(); i++) {
             char letra = textoEntrada.charAt(i);
             letrasDePalabra.add(letra);
         }
     }
 
-    private boolean letraExisteEnPalabra(String letra) {
+    public boolean letraExisteEnPalabra(String letra) {
         char caracter = letra.charAt(0);
         for (int i = 0; i < letrasDePalabra.size(); i++) {
             if (caracter == letrasDePalabra.get(i)) {
@@ -37,13 +37,13 @@ public class manejadorAhorcado {
         return false;
     }
 
-    private void crearPalabra() {
+    public void crearPalabra() {
         for (int i = 0; i < letrasDePalabra.size(); i++) {
             letrasEnPantalla.add('_');
         }
     }
 
-    private String mostrarPalabra() {
+    public String mostrarPalabra() {
         String letraString;
         String textoEnPantalla = "";
         for (int i = 0; i < letrasEnPantalla.size(); i++) {
@@ -53,7 +53,7 @@ public class manejadorAhorcado {
         return textoEnPantalla;
     }
     
-    private void indexLetraACambiar(String letra){
+    public void indexLetraACambiar(String letra){
         char caracter = letra.charAt(0);
         for (int i = 0; i < letrasDePalabra.size(); i++) {
             if (caracter == letrasDePalabra.get(i)){
@@ -62,13 +62,13 @@ public class manejadorAhorcado {
         }
     }
     
-    private void mostrarPista(){
+    public void mostrarPista(){
         int numPista = cantidadPistasUsadas+1;
         JOptionPane.showMessageDialog(null, "Pista #"+numPista+": "+pistas.get(cantidadPistasUsadas));
         cantidadPistasUsadas++;
     }
     
-    private void agregarPista(String pista){
+    public void agregarPista(String pista){
         pistas.add(pista);
     }
 

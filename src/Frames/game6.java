@@ -6,21 +6,28 @@
 package Frames;
 
 import ahorcado.manejadorAhorcado;
+import java.awt.List;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author jonyasus
  */
 public class game6 extends javax.swing.JFrame {
-    
-     manejadorAhorcado operaciones;
+
+    static ArrayList<String> letrasUsadas = new ArrayList<>();
+    static ArrayList<String> letrasDePalabra = new ArrayList<>();
+    static ArrayList<String> letrasEnPantalla = new ArrayList<>();
+    static ArrayList<String> pistas = new ArrayList<>();
+    int cantidadVidas = 7;
+    int cantidadPistasUsadas = 0;
 
     /**
      * Creates new form game6
      */
-    public game6(manejadorAhorcado manejador) {
-        this.operaciones = manejador;
+    public game6() {
         initComponents();
     }
 
@@ -45,12 +52,20 @@ public class game6 extends javax.swing.JFrame {
         vidasDisponibles = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        verPista = new javax.swing.JButton();
+        intentar = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         newGame = new javax.swing.JMenu();
+        nuevoJuego = new javax.swing.JMenuItem();
+        salirButton = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Ahorcado");
+        setResizable(false);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Estado");
@@ -70,6 +85,7 @@ public class game6 extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        letraIngresada.setEditable(false);
         letraIngresada.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         letraIngresada.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         letraIngresada.addActionListener(new java.awt.event.ActionListener() {
@@ -83,25 +99,62 @@ public class game6 extends javax.swing.JFrame {
             }
         });
 
+        jTextArea2.setEditable(false);
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
 
-        jButton1.setText("Ver Pista");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        verPista.setText("Ver Pista");
+        verPista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                verPistaActionPerformed(evt);
             }
         });
 
-        jButton2.setText("¡Probar!");
+        intentar.setText("¡Probar!");
+        intentar.setEnabled(false);
+        intentar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                intentarActionPerformed(evt);
+            }
+        });
 
-        newGame.setText("Nuevo Juego");
+        jTextField1.setText("jTextField1");
+
+        jTextField2.setText("jTextField2");
+
+        jTextField3.setText("jTextField3");
+
+        jTextField4.setText("jTextField4");
+
+        newGame.setText("Opciones");
+        newGame.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                newGameMouseClicked(evt);
+            }
+        });
         newGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newGameActionPerformed(evt);
             }
         });
+
+        nuevoJuego.setText("Nuevo juego");
+        nuevoJuego.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoJuegoActionPerformed(evt);
+            }
+        });
+        newGame.add(nuevoJuego);
+
+        salirButton.setText("Salir");
+        salirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirButtonActionPerformed(evt);
+            }
+        });
+        newGame.add(salirButton);
+
         jMenuBar1.add(newGame);
 
         setJMenuBar(jMenuBar1);
@@ -125,19 +178,27 @@ public class game6 extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-                                    .addComponent(letraIngresada)))))
+                                    .addComponent(intentar, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                                    .addComponent(letraIngresada))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(31, 31, 31)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel6)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jButton1)
+                        .addComponent(verPista)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel5)
                             .addGap(38, 38, 38)
                             .addComponent(vidasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,7 +207,13 @@ public class game6 extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,7 +225,7 @@ public class game6 extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(letraIngresada, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(intentar)
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -167,17 +234,17 @@ public class game6 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(verPista)
                 .addGap(22, 22, 22))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void verPistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verPistaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_verPistaActionPerformed
 
     private void letraIngresadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_letraIngresadaActionPerformed
         // TODO add your handling code here:
@@ -192,21 +259,128 @@ public class game6 extends javax.swing.JFrame {
     }//GEN-LAST:event_letraIngresadaKeyTyped
 
     private void newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_newGameActionPerformed
+
+    private void newGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newGameMouseClicked
+
+    }//GEN-LAST:event_newGameMouseClicked
+
+    private void nuevoJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoJuegoActionPerformed
+        newGame();
+    }//GEN-LAST:event_nuevoJuegoActionPerformed
+
+    private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed
+        dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_salirButtonActionPerformed
+
+    private void intentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intentarActionPerformed
+        
+        letrasUsadas.add(letraIngresada.getText());
+        
+    }//GEN-LAST:event_intentarActionPerformed
 
     public void keyTyped(KeyEvent e) {
         if (letraIngresada.getText().length() == 1) {
             e.consume();
         }
     }
+
+    private void newGame() {
+        //JOptionPane.showInputDialog(this);
+        String palabraNueva = jTextField1.getText();
+        String pista1 = jTextField2.getText();
+        String pista2 = jTextField3.getText();
+        String pista3 = jTextField4.getText();
+        agregarPista(pista1);
+        agregarPista(pista2);
+        agregarPista(pista3);
+        for (int i = 0; i < palabraNueva.length(); i++) {
+            char letra = palabraNueva.charAt(i);
+            String s = String.valueOf(letra);
+            letrasDePalabra.add(s);
+            System.out.println(letrasDePalabra.get(i));
+        }
+        for (int i = 0; i < palabraNueva.length(); i++) {
+            letrasEnPantalla.add(" __");
+        }
+        
+        jTextArea1.setText(mostrarPalabra());
+        habilitarTodo();
+        vidasDisponibles.setText(Integer.toString(cantidadVidas));
+    }
+
+    private void bloquearTodo() {
+        letraIngresada.setEditable(false);
+        verPista.setEnabled(false);
+        intentar.setEnabled(false);
+    }
+
+    private void habilitarTodo() {
+        letraIngresada.setEditable(true);
+        verPista.setEnabled(true);
+        intentar.setEnabled(true);
+    }
+
+    public void obtenerPalabraPorLetras(String textoEntrada) {
+        for (int i = 0; i < textoEntrada.length(); i++) {
+            char letra = textoEntrada.charAt(i);
+            String s = String.valueOf(letra);
+            letrasDePalabra.add(s);
+        }
+    }
+
+    public boolean letraExisteEnPalabra(String letra) {
+        for (int i = 0; i < letrasDePalabra.size(); i++) {
+            if (letra == letrasDePalabra.get(i)) {
+                JOptionPane.showMessageDialog(null, "¡Haz acertado!");
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "¡Haz fallado, sigue intentando!");
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public void crearPalabra() {
+        for (int i = 0; i < letrasDePalabra.size(); i++) {
+            letrasEnPantalla.add("__ ");
+        }
+    }
+
+    public String mostrarPalabra() {
+        String letraString = "";
+        for (int i = 0; i < letrasEnPantalla.size(); i++) {
+            letraString += String.valueOf(letrasEnPantalla.get(i));
+        }
+        return letraString;
+    }
+
+    public void indexLetraACambiar(String letra) {
+        for (int i = 0; i < letrasDePalabra.size(); i++) {
+            if (letra == letrasDePalabra.get(i)) {
+                letrasEnPantalla.set(i, letra);
+            }
+        }
+    }
+
+    public void mostrarPista() {
+        int numPista = cantidadPistasUsadas + 1;
+        JOptionPane.showMessageDialog(null, "Pista #" + numPista + ": " + pistas.get(cantidadPistasUsadas));
+        cantidadPistasUsadas++;
+    }
+
+    public void agregarPista(String pista) {
+        pistas.add(pista);
+    }
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton intentar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -218,8 +392,15 @@ public class game6 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField letraIngresada;
     private javax.swing.JMenu newGame;
+    private javax.swing.JMenuItem nuevoJuego;
+    private javax.swing.JMenuItem salirButton;
+    private javax.swing.JButton verPista;
     private javax.swing.JLabel vidasDisponibles;
     // End of variables declaration//GEN-END:variables
 }
