@@ -23,6 +23,7 @@ public class game6 extends javax.swing.JFrame {
     static ArrayList<String> pistas;
     int cantidadVidas = 7;
     int cantidadPistasUsadas = 0;
+    int cantidadAciertos = 0;
 
     /**
      * Creates new form game6
@@ -52,18 +53,20 @@ public class game6 extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         letraIngresada = new javax.swing.JTextField();
         vidasDisponibles = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        letrasUsadasTextArea = new javax.swing.JTextArea();
         verPista = new javax.swing.JButton();
         intentar = new javax.swing.JButton();
-        palabraSecreta = new javax.swing.JTextField();
-        pista1TextField = new javax.swing.JTextField();
-        pista2Texfield = new javax.swing.JTextField();
-        pista3Textfield = new javax.swing.JTextField();
         procesoPalabra = new javax.swing.JLabel();
+        palabraSecreta = new javax.swing.JPasswordField();
+        pista1TextField = new javax.swing.JPasswordField();
+        pista2Texfield = new javax.swing.JPasswordField();
+        pista3Textfield = new javax.swing.JPasswordField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        iniciarButton = new javax.swing.JButton();
+        letrasUsadasTextArea = new javax.swing.JTextField();
+        reiniciarButtom = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         newGame = new javax.swing.JMenu();
-        nuevoJuego = new javax.swing.JMenuItem();
         salirButton = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -100,12 +103,8 @@ public class game6 extends javax.swing.JFrame {
 
         vidasDisponibles.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
 
-        letrasUsadasTextArea.setEditable(false);
-        letrasUsadasTextArea.setColumns(20);
-        letrasUsadasTextArea.setRows(5);
-        jScrollPane2.setViewportView(letrasUsadasTextArea);
-
         verPista.setText("Ver Pista");
+        verPista.setEnabled(false);
         verPista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 verPistaActionPerformed(evt);
@@ -120,15 +119,36 @@ public class game6 extends javax.swing.JFrame {
             }
         });
 
-        palabraSecreta.setText("jTextField1");
-
-        pista1TextField.setText("jTextField2");
-
-        pista2Texfield.setText("jTextField3");
-
-        pista3Textfield.setText("jTextField4");
-
+        procesoPalabra.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         procesoPalabra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        pista1TextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pista1TextFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Palabra secreta:");
+
+        jLabel8.setText("Ingresa 3 pistas:");
+
+        iniciarButton.setText("¡Iniciar Juego!");
+        iniciarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iniciarButtonActionPerformed(evt);
+            }
+        });
+
+        letrasUsadasTextArea.setEditable(false);
+        letrasUsadasTextArea.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        letrasUsadasTextArea.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        reiniciarButtom.setText("Reinicar juego");
+        reiniciarButtom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reiniciarButtomActionPerformed(evt);
+            }
+        });
 
         newGame.setText("Opciones");
         newGame.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -141,14 +161,6 @@ public class game6 extends javax.swing.JFrame {
                 newGameActionPerformed(evt);
             }
         });
-
-        nuevoJuego.setText("Nuevo juego");
-        nuevoJuego.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nuevoJuegoActionPerformed(evt);
-            }
-        });
-        newGame.add(nuevoJuego);
 
         salirButton.setText("Salir");
         salirButton.addActionListener(new java.awt.event.ActionListener() {
@@ -167,82 +179,116 @@ public class game6 extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel4))
-                                    .addGap(47, 47, 47)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(intentar, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(letraIngresada, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(palabraSecreta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(31, 31, 31)
-                                    .addComponent(pista1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(pista2Texfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(pista3Textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(verPista)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addGap(38, 38, 38)
-                                    .addComponent(vidasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(356, 356, 356)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(47, 47, 47)
+                        .addComponent(letraIngresada, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(procesoPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(111, 111, 111)
+                                .addComponent(jLabel2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(procesoPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel8)
+                                                .addComponent(jLabel7))
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGap(27, 27, 27)
+                                                    .addComponent(iniciarButton))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(palabraSecreta, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGap(6, 6, 6)
+                                                    .addComponent(pista1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(pista2Texfield, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(pista3Textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(verPista, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(reiniciarButtom))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(letrasUsadasTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(38, 38, 38)
+                                        .addComponent(vidasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(160, 160, 160))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(179, 179, 179)
+                                .addComponent(intentar)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(palabraSecreta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pista1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pista2Texfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pista3Textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(procesoPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(palabraSecreta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(pista1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pista2Texfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pista3Textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(18, 18, 18)
+                        .addComponent(iniciarButton)
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4))
+                            .addComponent(letraIngresada, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4))
-                    .addComponent(letraIngresada, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(intentar)
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(vidasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(verPista)
-                .addGap(22, 22, 22))
+                        .addComponent(intentar)
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(vidasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(letrasUsadasTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(verPista, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(reiniciarButtom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(procesoPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)))
+                .addContainerGap())
         );
 
         pack();
@@ -281,10 +327,6 @@ public class game6 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_newGameMouseClicked
 
-    private void nuevoJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoJuegoActionPerformed
-        newGame();
-    }//GEN-LAST:event_nuevoJuegoActionPerformed
-
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed
         dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_salirButtonActionPerformed
@@ -296,6 +338,7 @@ public class game6 extends javax.swing.JFrame {
             if (letraExisteEnPalabra(letraIngresada.getText()) && cantidadVidas > 1) {
                 letrasUsadas.add(letraIngresada.getText());
                 JOptionPane.showMessageDialog(null, "¡Haz acertado!");
+                cantidadAciertos++;
                 indexLetraACambiar(letraIngresada.getText());
                 mostrarPalabra();
             } else {
@@ -324,9 +367,36 @@ public class game6 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "¡Has sido ahorcado!");
             resetear();
             bloquearTodo();
-            
+        }
+        if (yaGanoONo()){
+             JOptionPane.showMessageDialog(null, "¡Has GANADO, Felicidades! : )");
+            resetear();
         }
     }//GEN-LAST:event_intentarActionPerformed
+
+    private void pista1TextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pista1TextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pista1TextFieldActionPerformed
+
+    private void iniciarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarButtonActionPerformed
+        if (palabraSecreta.getText().isEmpty() || pista1TextField.getText().isEmpty() || pista2Texfield.getText().isEmpty() || pista3Textfield.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "¡Debes llenar todos los campos anteriores!");
+        } else {
+            newGame();
+            palabraSecreta.setEditable(false);
+            pista1TextField.setEditable(false);
+            pista2Texfield.setEditable(false);
+            pista3Textfield.setEditable(false);
+            verPista.setEnabled(true);
+            iniciarButton.setEnabled(false);
+            reiniciarButtom.setEnabled(true);
+        }
+
+    }//GEN-LAST:event_iniciarButtonActionPerformed
+
+    private void reiniciarButtomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reiniciarButtomActionPerformed
+        resetear();
+    }//GEN-LAST:event_reiniciarButtomActionPerformed
 
     public void keyTyped(KeyEvent e) {
         if (letraIngresada.getText().length() == 1) {
@@ -436,17 +506,34 @@ public class game6 extends javax.swing.JFrame {
         }
         return false;
     }
-    
-    public void resetear(){
-    letrasDePalabra.clear();
-    letrasEnPantalla.clear();
-    letrasUsadas.clear();
-    cantidadVidas=7;
-    palabraSecreta.setText("");
-    pista1TextField.setText("");
-    pista2Texfield.setText("");
-    pista3Textfield.setText("");
-    letrasUsadasTextArea.setText("");
+
+    public boolean yaGanoONo() {
+        if (cantidadAciertos == letrasDePalabra.size()) {
+            return true;
+        }
+        return false;
+    }
+
+    public void resetear() {
+        procesoPalabra.setText("");
+        letrasDePalabra.clear();
+        letrasEnPantalla.clear();
+        letrasUsadas.clear();
+        cantidadVidas = 7;
+        palabraSecreta.setText("");
+        pista1TextField.setText("");
+        pista2Texfield.setText("");
+        pista3Textfield.setText("");
+        letrasUsadasTextArea.setText("");
+        iniciarButton.setEnabled(true);
+        palabraSecreta.setEditable(true);
+        pista1TextField.setEditable(true);
+        pista2Texfield.setEditable(true);
+        pista3Textfield.setEditable(true);
+        verPista.setEnabled(false);
+        letraIngresada.setEditable(false);
+        intentar.setEnabled(false);
+        reiniciarButtom.setEnabled(false);
     }
 
     /**
@@ -454,6 +541,7 @@ public class game6 extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton iniciarButton;
     private javax.swing.JButton intentar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -461,17 +549,18 @@ public class game6 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField letraIngresada;
-    private javax.swing.JTextArea letrasUsadasTextArea;
+    private javax.swing.JTextField letrasUsadasTextArea;
     private javax.swing.JMenu newGame;
-    private javax.swing.JMenuItem nuevoJuego;
-    private javax.swing.JTextField palabraSecreta;
-    private javax.swing.JTextField pista1TextField;
-    private javax.swing.JTextField pista2Texfield;
-    private javax.swing.JTextField pista3Textfield;
+    private javax.swing.JPasswordField palabraSecreta;
+    private javax.swing.JPasswordField pista1TextField;
+    private javax.swing.JPasswordField pista2Texfield;
+    private javax.swing.JPasswordField pista3Textfield;
     private javax.swing.JLabel procesoPalabra;
+    private javax.swing.JButton reiniciarButtom;
     private javax.swing.JMenuItem salirButton;
     private javax.swing.JButton verPista;
     private javax.swing.JLabel vidasDisponibles;
