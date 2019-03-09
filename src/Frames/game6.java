@@ -8,7 +8,9 @@ package Frames;
 import ahorcado.manejadorAhorcado;
 import java.awt.List;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,6 +26,38 @@ public class game6 extends javax.swing.JFrame {
     int cantidadVidas = 7;
     int cantidadPistasUsadas = 0;
     int cantidadAciertos = 0;
+
+    String path0 = "/ahorcadoimg/ah0.png";
+    URL url0 = this.getClass().getResource(path0);
+    ImageIcon icon0 = new ImageIcon(url0);
+    
+    String path1 = "/ahorcadoimg/ah1.png";
+    URL url1 = this.getClass().getResource(path1);
+    ImageIcon icon1 = new ImageIcon(url1);
+    
+    String path2 = "/ahorcadoimg/ah2.png";
+    URL url2 = this.getClass().getResource(path2);
+    ImageIcon icon2 = new ImageIcon(url2);
+    
+    String path3 = "/ahorcadoimg/ah3.png";
+    URL url3 = this.getClass().getResource(path3);
+    ImageIcon icon3 = new ImageIcon(url3);
+    
+    String path4 = "/ahorcadoimg/ah4.png";
+    URL url4 = this.getClass().getResource(path4);
+    ImageIcon icon4 = new ImageIcon(url4);
+    
+    String path5 = "/ahorcadoimg/ah5.png";
+    URL url5 = this.getClass().getResource(path5);
+    ImageIcon icon5 = new ImageIcon(url5);
+    
+    String path6 = "/ahorcadoimg/ah6.png";
+    URL url6 = this.getClass().getResource(path6);
+    ImageIcon icon6 = new ImageIcon(url6);
+    
+    String path7 = "/ahorcadoimg/ah7.png";
+    URL url7 = this.getClass().getResource(path7);
+    ImageIcon icon7 = new ImageIcon(url7);
 
     /**
      * Creates new form game6
@@ -45,7 +79,7 @@ public class game6 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        estadoLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -73,8 +107,8 @@ public class game6 extends javax.swing.JFrame {
         setTitle("Ahorcado");
         setResizable(false);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Estado");
+        estadoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        estadoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ahorcadoimg/ah0.png"))); // NOI18N
 
         jLabel2.setText("La palabra es:");
 
@@ -191,7 +225,7 @@ public class game6 extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(estadoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(111, 111, 111)
                                 .addComponent(jLabel2))
@@ -233,8 +267,7 @@ public class game6 extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addGap(38, 38, 38)
-                                        .addComponent(vidasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(160, 160, 160))))
+                                        .addComponent(vidasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(179, 179, 179)
                                 .addComponent(intentar)))))
@@ -282,7 +315,7 @@ public class game6 extends javax.swing.JFrame {
                             .addComponent(reiniciarButtom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(estadoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -352,6 +385,23 @@ public class game6 extends javax.swing.JFrame {
 
         }
 
+        if (cantidadVidas == 6) {
+            estadoLabel.setIcon(icon1);
+        } else if (cantidadVidas == 5){
+            estadoLabel.setIcon(icon2);
+        } else if (cantidadVidas == 4){
+            estadoLabel.setIcon(icon3);
+        } else if (cantidadVidas == 3){
+            estadoLabel.setIcon(icon4);
+        } else if (cantidadVidas == 2){
+            estadoLabel.setIcon(icon5);
+        } else if (cantidadVidas == 1){
+            estadoLabel.setIcon(icon6);
+        } else if (cantidadVidas == 0){
+            estadoLabel.setIcon(icon7);
+        }
+        
+
         letraIngresada.setText("");
         mostrarLetrasUsadas();
         String vidas = String.valueOf(cantidadVidas);
@@ -368,10 +418,12 @@ public class game6 extends javax.swing.JFrame {
             resetear();
             bloquearTodo();
         }
-        if (yaGanoONo()){
-             JOptionPane.showMessageDialog(null, "¡Has GANADO, Felicidades! : )");
+        if (yaGanoONo()) {
+            JOptionPane.showMessageDialog(null, "¡Has GANADO, Felicidades! : )");
             resetear();
         }
+
+
     }//GEN-LAST:event_intentarActionPerformed
 
     private void pista1TextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pista1TextFieldActionPerformed
@@ -515,6 +567,7 @@ public class game6 extends javax.swing.JFrame {
     }
 
     public void resetear() {
+        estadoLabel.setIcon(icon0);
         procesoPalabra.setText("");
         letrasDePalabra.clear();
         letrasEnPantalla.clear();
@@ -541,9 +594,9 @@ public class game6 extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel estadoLabel;
     private javax.swing.JButton iniciarButton;
     private javax.swing.JButton intentar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
