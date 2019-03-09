@@ -17,10 +17,10 @@ import javax.swing.JOptionPane;
  */
 public class game6 extends javax.swing.JFrame {
 
-    static ArrayList<String> letrasUsadas = new ArrayList<>();
-    static ArrayList<String> letrasDePalabra = new ArrayList<>();
-    static ArrayList<String> letrasEnPantalla = new ArrayList<>();
-    static ArrayList<String> pistas = new ArrayList<>();
+    static ArrayList<String> letrasUsadas;
+    static ArrayList<String> letrasDePalabra;
+    static ArrayList<String> letrasEnPantalla;
+    static ArrayList<String> pistas;
     int cantidadVidas = 7;
     int cantidadPistasUsadas = 0;
 
@@ -28,6 +28,10 @@ public class game6 extends javax.swing.JFrame {
      * Creates new form game6
      */
     public game6() {
+        letrasUsadas = new ArrayList<>();
+        letrasDePalabra = new ArrayList<>();
+        letrasEnPantalla = new ArrayList<>();
+        pistas = new ArrayList<>();
         initComponents();
     }
 
@@ -46,18 +50,17 @@ public class game6 extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         letraIngresada = new javax.swing.JTextField();
         vidasDisponibles = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        letrasUsadasTextArea = new javax.swing.JTextArea();
         verPista = new javax.swing.JButton();
         intentar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        palabraSecreta = new javax.swing.JTextField();
+        pista1TextField = new javax.swing.JTextField();
+        pista2Texfield = new javax.swing.JTextField();
+        pista3Textfield = new javax.swing.JTextField();
+        procesoPalabra = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         newGame = new javax.swing.JMenu();
         nuevoJuego = new javax.swing.JMenuItem();
@@ -81,10 +84,6 @@ public class game6 extends javax.swing.JFrame {
 
         jLabel6.setText("Letras usadas:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
         letraIngresada.setEditable(false);
         letraIngresada.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         letraIngresada.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -99,10 +98,12 @@ public class game6 extends javax.swing.JFrame {
             }
         });
 
-        jTextArea2.setEditable(false);
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        vidasDisponibles.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+
+        letrasUsadasTextArea.setEditable(false);
+        letrasUsadasTextArea.setColumns(20);
+        letrasUsadasTextArea.setRows(5);
+        jScrollPane2.setViewportView(letrasUsadasTextArea);
 
         verPista.setText("Ver Pista");
         verPista.addActionListener(new java.awt.event.ActionListener() {
@@ -119,13 +120,15 @@ public class game6 extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setText("jTextField1");
+        palabraSecreta.setText("jTextField1");
 
-        jTextField2.setText("jTextField2");
+        pista1TextField.setText("jTextField2");
 
-        jTextField3.setText("jTextField3");
+        pista2Texfield.setText("jTextField3");
 
-        jTextField4.setText("jTextField4");
+        pista3Textfield.setText("jTextField4");
+
+        procesoPalabra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         newGame.setText("Opciones");
         newGame.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -166,38 +169,41 @@ public class game6 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(intentar, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-                                    .addComponent(letraIngresada))))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(31, 31, 31)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(verPista)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addGap(38, 38, 38)
-                            .addComponent(vidasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel4))
+                                    .addGap(47, 47, 47)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(intentar, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(letraIngresada, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(palabraSecreta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(31, 31, 31)
+                                    .addComponent(pista1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(pista2Texfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(pista3Textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(verPista)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addGap(38, 38, 38)
+                                    .addComponent(vidasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(procesoPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -209,15 +215,15 @@ public class game6 extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                    .addComponent(palabraSecreta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pista1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pista2Texfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pista3Textfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
+                .addGap(18, 18, 18)
+                .addComponent(procesoPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -230,7 +236,7 @@ public class game6 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(vidasDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -243,7 +249,16 @@ public class game6 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void verPistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verPistaActionPerformed
-        // TODO add your handling code here:
+        if (cantidadPistasUsadas < 3) {
+            JOptionPane.showMessageDialog(null, "PISTA: " + pistas.get(cantidadPistasUsadas));
+            cantidadPistasUsadas++;
+            cantidadVidas--;
+            String vidas = String.valueOf(cantidadVidas);
+            vidasDisponibles.setText(vidas);
+        } else {
+            JOptionPane.showMessageDialog(null, "¡Te has quedado sin pistas!");
+        }
+
     }//GEN-LAST:event_verPistaActionPerformed
 
     private void letraIngresadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_letraIngresadaActionPerformed
@@ -275,9 +290,42 @@ public class game6 extends javax.swing.JFrame {
     }//GEN-LAST:event_salirButtonActionPerformed
 
     private void intentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intentarActionPerformed
-        
-        letrasUsadas.add(letraIngresada.getText());
-        
+        String letrasUtilizadas = "";
+        if (verificarLetraUsada(letraIngresada.getText()) == false) {
+
+            if (letraExisteEnPalabra(letraIngresada.getText()) && cantidadVidas > 1) {
+                letrasUsadas.add(letraIngresada.getText());
+                JOptionPane.showMessageDialog(null, "¡Haz acertado!");
+                indexLetraACambiar(letraIngresada.getText());
+                mostrarPalabra();
+            } else {
+                letrasUsadas.add(letraIngresada.getText());
+                JOptionPane.showMessageDialog(null, "¡Haz fallado!");
+                cantidadVidas--;
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "¡Ya ingresaste esa letra!");
+
+        }
+
+        letraIngresada.setText("");
+        mostrarLetrasUsadas();
+        String vidas = String.valueOf(cantidadVidas);
+        vidasDisponibles.setText(vidas);
+        procesoPalabra.setText("");
+        procesoPalabra.setText(mostrarPalabra());
+        for (int i = 0; i < letrasUsadas.size(); i++) {
+            letrasUtilizadas += " " + letrasUsadas.get(i);
+        }
+        letrasUsadasTextArea.setText(letrasUtilizadas);
+
+        if (cantidadVidas == 0) {
+            JOptionPane.showMessageDialog(null, "¡Has sido ahorcado!");
+            resetear();
+            bloquearTodo();
+            
+        }
     }//GEN-LAST:event_intentarActionPerformed
 
     public void keyTyped(KeyEvent e) {
@@ -288,10 +336,12 @@ public class game6 extends javax.swing.JFrame {
 
     private void newGame() {
         //JOptionPane.showInputDialog(this);
-        String palabraNueva = jTextField1.getText();
-        String pista1 = jTextField2.getText();
-        String pista2 = jTextField3.getText();
-        String pista3 = jTextField4.getText();
+        String vidas = String.valueOf(cantidadVidas);
+        vidasDisponibles.setText(vidas);
+        String palabraNueva = palabraSecreta.getText();
+        String pista1 = pista1TextField.getText();
+        String pista2 = pista2Texfield.getText();
+        String pista3 = pista3Textfield.getText();
         agregarPista(pista1);
         agregarPista(pista2);
         agregarPista(pista3);
@@ -304,8 +354,8 @@ public class game6 extends javax.swing.JFrame {
         for (int i = 0; i < palabraNueva.length(); i++) {
             letrasEnPantalla.add(" __");
         }
-        
-        jTextArea1.setText(mostrarPalabra());
+
+        procesoPalabra.setText(mostrarPalabra());
         habilitarTodo();
         vidasDisponibles.setText(Integer.toString(cantidadVidas));
     }
@@ -332,12 +382,9 @@ public class game6 extends javax.swing.JFrame {
 
     public boolean letraExisteEnPalabra(String letra) {
         for (int i = 0; i < letrasDePalabra.size(); i++) {
-            if (letra == letrasDePalabra.get(i)) {
-                JOptionPane.showMessageDialog(null, "¡Haz acertado!");
+            if (letra.equalsIgnoreCase(letrasDePalabra.get(i))) {
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "¡Haz fallado, sigue intentando!");
-                return false;
             }
         }
         return false;
@@ -359,7 +406,7 @@ public class game6 extends javax.swing.JFrame {
 
     public void indexLetraACambiar(String letra) {
         for (int i = 0; i < letrasDePalabra.size(); i++) {
-            if (letra == letrasDePalabra.get(i)) {
+            if (letra.equalsIgnoreCase(letrasDePalabra.get(i))) {
                 letrasEnPantalla.set(i, letra);
             }
         }
@@ -371,8 +418,35 @@ public class game6 extends javax.swing.JFrame {
         cantidadPistasUsadas++;
     }
 
+    public void mostrarLetrasUsadas() {
+        for (int i = 0; i < letrasUsadas.size(); i++) {
+            System.out.println("Usada: " + letrasUsadas.get(i));
+        }
+    }
+
     public void agregarPista(String pista) {
         pistas.add(pista);
+    }
+
+    public boolean verificarLetraUsada(String letra) {
+        for (int i = 0; i < letrasUsadas.size(); i++) {
+            if (letra.equalsIgnoreCase(letrasUsadas.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void resetear(){
+    letrasDePalabra.clear();
+    letrasEnPantalla.clear();
+    letrasUsadas.clear();
+    cantidadVidas=7;
+    palabraSecreta.setText("");
+    pista1TextField.setText("");
+    pista2Texfield.setText("");
+    pista3Textfield.setText("");
+    letrasUsadasTextArea.setText("");
     }
 
     /**
@@ -388,17 +462,16 @@ public class game6 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField letraIngresada;
+    private javax.swing.JTextArea letrasUsadasTextArea;
     private javax.swing.JMenu newGame;
     private javax.swing.JMenuItem nuevoJuego;
+    private javax.swing.JTextField palabraSecreta;
+    private javax.swing.JTextField pista1TextField;
+    private javax.swing.JTextField pista2Texfield;
+    private javax.swing.JTextField pista3Textfield;
+    private javax.swing.JLabel procesoPalabra;
     private javax.swing.JMenuItem salirButton;
     private javax.swing.JButton verPista;
     private javax.swing.JLabel vidasDisponibles;
