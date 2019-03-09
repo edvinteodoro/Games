@@ -168,19 +168,7 @@ public class framePrincipal extends javax.swing.JFrame {
         hilo.start();
        
     }//GEN-LAST:event_jButton1ActionPerformed
-    public static void iniciar(){
-     // Se crea el objeto "Juego"
-        // Se crea el objeto "Juego"
-        Juego elJuego = new Juego();
-        //Repite infinitamente (cuando el usuario cierre la ventana, internamente
-        //se llamará a System.exit() y se saldrá de este bucle)...
-        //while(false) {
-            //Cuando se sale de la presentación, empieza la partida
-            elJuego.partida();
-            //cuando se acaba la partida, se muestra el mensaje de fin de juego
-            elJuego.finDeJuego();
-        //}
-}
+   
     /**
      * @param args the command line arguments
      */
