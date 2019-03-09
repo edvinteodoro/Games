@@ -30,31 +30,31 @@ public class game6 extends javax.swing.JFrame {
     String path0 = "/ahorcadoimg/ah0.png";
     URL url0 = this.getClass().getResource(path0);
     ImageIcon icon0 = new ImageIcon(url0);
-    
+
     String path1 = "/ahorcadoimg/ah1.png";
     URL url1 = this.getClass().getResource(path1);
     ImageIcon icon1 = new ImageIcon(url1);
-    
+
     String path2 = "/ahorcadoimg/ah2.png";
     URL url2 = this.getClass().getResource(path2);
     ImageIcon icon2 = new ImageIcon(url2);
-    
+
     String path3 = "/ahorcadoimg/ah3.png";
     URL url3 = this.getClass().getResource(path3);
     ImageIcon icon3 = new ImageIcon(url3);
-    
+
     String path4 = "/ahorcadoimg/ah4.png";
     URL url4 = this.getClass().getResource(path4);
     ImageIcon icon4 = new ImageIcon(url4);
-    
+
     String path5 = "/ahorcadoimg/ah5.png";
     URL url5 = this.getClass().getResource(path5);
     ImageIcon icon5 = new ImageIcon(url5);
-    
+
     String path6 = "/ahorcadoimg/ah6.png";
     URL url6 = this.getClass().getResource(path6);
     ImageIcon icon6 = new ImageIcon(url6);
-    
+
     String path7 = "/ahorcadoimg/ah7.png";
     URL url7 = this.getClass().getResource(path7);
     ImageIcon icon7 = new ImageIcon(url7);
@@ -105,6 +105,8 @@ public class game6 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ahorcado");
+        setBackground(new java.awt.Color(255, 153, 0));
+        setForeground(java.awt.Color.orange);
         setResizable(false);
 
         estadoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -236,34 +238,36 @@ public class game6 extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(48, 48, 48)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel8)
+                                            .addComponent(jLabel7))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(palabraSecreta))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addGap(27, 27, 27)
+                                                        .addComponent(iniciarButton))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addGap(6, 6, 6)
+                                                        .addComponent(pista1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(pista2Texfield, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(pista3Textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel8)
-                                                .addComponent(jLabel7))
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addGap(27, 27, 27)
-                                                    .addComponent(iniciarButton))
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(palabraSecreta, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addGap(6, 6, 6)
-                                                    .addComponent(pista1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(pista2Texfield, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(pista3Textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(verPista, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(reiniciarButtom))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel6)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(letrasUsadasTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(verPista, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(reiniciarButtom))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel6)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(letrasUsadasTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addGap(38, 38, 38)
@@ -271,7 +275,7 @@ public class game6 extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(179, 179, 179)
                                 .addComponent(intentar)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,6 +342,22 @@ public class game6 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "¡Te has quedado sin pistas!");
         }
 
+        if (cantidadVidas == 6) {
+            estadoLabel.setIcon(icon1);
+        } else if (cantidadVidas == 5) {
+            estadoLabel.setIcon(icon2);
+        } else if (cantidadVidas == 4) {
+            estadoLabel.setIcon(icon3);
+        } else if (cantidadVidas == 3) {
+            estadoLabel.setIcon(icon4);
+        } else if (cantidadVidas == 2) {
+            estadoLabel.setIcon(icon5);
+        } else if (cantidadVidas == 1) {
+            estadoLabel.setIcon(icon6);
+        } else if (cantidadVidas == 0) {
+            estadoLabel.setIcon(icon7);
+        }
+
     }//GEN-LAST:event_verPistaActionPerformed
 
     private void letraIngresadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_letraIngresadaActionPerformed
@@ -387,20 +407,19 @@ public class game6 extends javax.swing.JFrame {
 
         if (cantidadVidas == 6) {
             estadoLabel.setIcon(icon1);
-        } else if (cantidadVidas == 5){
+        } else if (cantidadVidas == 5) {
             estadoLabel.setIcon(icon2);
-        } else if (cantidadVidas == 4){
+        } else if (cantidadVidas == 4) {
             estadoLabel.setIcon(icon3);
-        } else if (cantidadVidas == 3){
+        } else if (cantidadVidas == 3) {
             estadoLabel.setIcon(icon4);
-        } else if (cantidadVidas == 2){
+        } else if (cantidadVidas == 2) {
             estadoLabel.setIcon(icon5);
-        } else if (cantidadVidas == 1){
+        } else if (cantidadVidas == 1) {
             estadoLabel.setIcon(icon6);
-        } else if (cantidadVidas == 0){
+        } else if (cantidadVidas == 0) {
             estadoLabel.setIcon(icon7);
         }
-        
 
         letraIngresada.setText("");
         mostrarLetrasUsadas();
@@ -413,13 +432,13 @@ public class game6 extends javax.swing.JFrame {
         }
         letrasUsadasTextArea.setText(letrasUtilizadas);
 
+        if (yaGanoONo() == true) {
+            JOptionPane.showMessageDialog(null, "¡Has GANADO, Felicidades! : )");
+            resetear();
+        }
+
         if (cantidadVidas == 0) {
             JOptionPane.showMessageDialog(null, "¡Has sido ahorcado!");
-            resetear();
-            bloquearTodo();
-        }
-        if (yaGanoONo()) {
-            JOptionPane.showMessageDialog(null, "¡Has GANADO, Felicidades! : )");
             resetear();
         }
 
@@ -480,12 +499,6 @@ public class game6 extends javax.swing.JFrame {
         procesoPalabra.setText(mostrarPalabra());
         habilitarTodo();
         vidasDisponibles.setText(Integer.toString(cantidadVidas));
-    }
-
-    private void bloquearTodo() {
-        letraIngresada.setEditable(false);
-        verPista.setEnabled(false);
-        intentar.setEnabled(false);
     }
 
     private void habilitarTodo() {
@@ -560,7 +573,7 @@ public class game6 extends javax.swing.JFrame {
     }
 
     public boolean yaGanoONo() {
-        if (cantidadAciertos == letrasDePalabra.size()) {
+        if (cantidadAciertos == letrasDePalabra.size()-1) {
             return true;
         }
         return false;
@@ -573,6 +586,7 @@ public class game6 extends javax.swing.JFrame {
         letrasEnPantalla.clear();
         letrasUsadas.clear();
         cantidadVidas = 7;
+        cantidadAciertos = 0;
         palabraSecreta.setText("");
         pista1TextField.setText("");
         pista2Texfield.setText("");
