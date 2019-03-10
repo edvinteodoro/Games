@@ -5,6 +5,8 @@
  */
 package Frames;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -15,8 +17,13 @@ import javax.swing.JButton;
  */
 public class game3 extends javax.swing.JFrame implements ActionListener{
 
+    public static final int codeX = 1;
+    public static final int codeO = 0;
+    
     JButton board[][];
-    int turn = -1;
+    int turn = 1;
+    Color backGround;
+    
     /**
      * Creates new form game3
      */
@@ -35,8 +42,11 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
                 board[i][j].setBounds((i)*150,(j)*150,150,150);
                 boardPanel.add(board[i][j]);
                 board[i][j].addActionListener(this);
+                board[i][j].setFont(new Font("Arial", Font.BOLD, 34));
+                board[i][j].setForeground(Color.BLACK);
             }
         }
+        backGround = board[0][0].getBackground();
     }
 
     /**
@@ -218,6 +228,21 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        JButton button = (JButton) e.getSource();
+        if (turn == codeX){
+            if (button.getText().equals("")){
+                button.setBackground(Color.decode("#A9D0F5"));
+                button.setText("X");
+                button.setEnabled(false);
+                turn = codeO;
+            }
+        } else {
+            if (button.getText().equals("")){
+                button.setBackground(Color.decode("#F6D8CE"));
+                button.setText("O");
+                button.setEnabled(false);
+                turn = codeX;   
+            }
+        }
     }
 }
