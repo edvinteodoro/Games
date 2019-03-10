@@ -11,14 +11,14 @@ package Frames;
  * @author teodoro
  */
 public class framePrincipal extends javax.swing.JFrame {
-
+    game3 game3 = new game3();
     /**
      * Creates new form framePrincipal
      */
     public framePrincipal() {
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-         }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -90,6 +90,11 @@ public class framePrincipal extends javax.swing.JFrame {
         panelMenu.add(jLabel2);
 
         jLabel4.setText("NUMERO 3");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
         panelMenu.add(jLabel4);
 
         jLabel5.setText("NUMERO 4");
@@ -159,6 +164,9 @@ public class framePrincipal extends javax.swing.JFrame {
         //djfajflaldjksfdfassssssssssssssssssssssssssss
     }//GEN-LAST:event_buttonDanielActionPerformed
 
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        game3.setVisible(true);
+    }//GEN-LAST:event_jLabel4MouseClicked
     /**
      * @param args the command line arguments
      */
