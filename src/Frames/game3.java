@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,7 +23,7 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
     
     JButton board[][];
     int turn = 1;
-    Color backGround;
+    Color backGroundColor;
     
     /**
      * Creates new form game3
@@ -46,7 +47,7 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
                 board[i][j].setForeground(Color.BLACK);
             }
         }
-        backGround = board[0][0].getBackground();
+        backGroundColor = board[0][0].getBackground();
     }
 
     /**
@@ -130,6 +131,11 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
         menuPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Menu"));
 
         newGameButton.setText("Juego Nuevo");
+        newGameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newGameButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
@@ -212,6 +218,11 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void newGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameButtonActionPerformed
+        clean();
+    }//GEN-LAST:event_newGameButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boardPanel;
     private javax.swing.JPanel menuPanel;
@@ -243,7 +254,61 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
                 button.setText("O");
                 button.setEnabled(false);
                 turn = codeX;   
-                                turnLabel.setText("X");
+                turnLabel.setText("X");
+            }
+        }
+        verify();
+    }
+    
+    public void verify(){
+        int winner;
+        winner = verifyWinner("X");
+        if (winner == 0){
+            winner = verifyWinner("O");
+        }
+        if (winner == 1){
+            if (turn == codeO){
+             JOptionPane.showMessageDialog(this, "Ganador Jugador: X ", "Partida Terminada", JOptionPane.INFORMATION_MESSAGE);   
+              blockButtons();
+            } else {
+             JOptionPane.showMessageDialog(this, "Ganador Jugador: O ", "Partida Terminada", JOptionPane.INFORMATION_MESSAGE);   
+              blockButtons();
+            }
+        }
+    }
+    
+    public int verifyWinner(String value){
+        for (int i = 0; i < 3; i++) {
+            if (board[0][i].getText().equals(value) && board[1][i].getText().equals(value) && board[2][i].getText().equals(value)){
+                return 1;
+                
+            } 
+            if (board[i][0].getText().equals(value) && board[i][1].getText().equals(value) && board[i][2].getText().equals(value)){
+                return 1;
+            }           
+        }
+        if (board[0][0].getText().equals(value) && board[1][1].getText().equals(value) && board[2][2].getText().equals(value)){
+                return 1;
+        }
+        if (board[0][2].getText().equals(value) && board[1][1].getText().equals(value) && board[2][0].getText().equals(value)){
+                return 1;
+        }
+        return 0;
+    }
+    public void clean(){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j].setText("");
+                board[i][j].setEnabled(true);
+                board[i][j].setBackground(backGroundColor);
+            }
+        }
+    }
+    
+    public void blockButtons(){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j].setEnabled(false);
             }
         }
     }
