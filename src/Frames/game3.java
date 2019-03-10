@@ -5,19 +5,38 @@
  */
 package Frames;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+
 /**
  *
  * @author crystian
  */
-public class game3 extends javax.swing.JFrame {
+public class game3 extends javax.swing.JFrame implements ActionListener{
 
+    JButton board[][];
+    int turn = -1;
     /**
      * Creates new form game3
      */
     public game3() {
         initComponents();
         this.setTitle("Tres en Raya");
+        board = new JButton[3][3];
+        createBoard();
         this.setLocationRelativeTo(null);
+    }
+    
+    private void createBoard(){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = new JButton();
+                board[i][j].setBounds((i)*150,(j)*150,150,150);
+                boardPanel.add(board[i][j]);
+                board[i][j].addActionListener(this);
+            }
+        }
     }
 
     /**
@@ -31,15 +50,6 @@ public class game3 extends javax.swing.JFrame {
 
         principalPanel = new javax.swing.JPanel();
         boardPanel = new javax.swing.JPanel();
-        B00 = new javax.swing.JButton();
-        B01 = new javax.swing.JButton();
-        B02 = new javax.swing.JButton();
-        B10 = new javax.swing.JButton();
-        B11 = new javax.swing.JButton();
-        B12 = new javax.swing.JButton();
-        B20 = new javax.swing.JButton();
-        B21 = new javax.swing.JButton();
-        B22 = new javax.swing.JButton();
         scorePanel = new javax.swing.JPanel();
         xLabel = new javax.swing.JLabel();
         oLabel = new javax.swing.JLabel();
@@ -53,72 +63,15 @@ public class game3 extends javax.swing.JFrame {
         setTitle("Tres en Raya");
         setResizable(false);
 
-        boardPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        B00.setToolTipText("");
-
-        B01.setToolTipText("");
-
-        B02.setToolTipText("");
-
-        B10.setToolTipText("");
-
-        B11.setToolTipText("");
-
-        B12.setToolTipText("");
-
-        B20.setToolTipText("");
-
-        B21.setToolTipText("");
-
-        B22.setToolTipText("");
-
         javax.swing.GroupLayout boardPanelLayout = new javax.swing.GroupLayout(boardPanel);
         boardPanel.setLayout(boardPanelLayout);
         boardPanelLayout.setHorizontalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(boardPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(boardPanelLayout.createSequentialGroup()
-                        .addComponent(B00, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(B01, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(B02, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(boardPanelLayout.createSequentialGroup()
-                        .addComponent(B10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(B11, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(B12, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(boardPanelLayout.createSequentialGroup()
-                        .addComponent(B20, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(B21, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(B22, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 455, Short.MAX_VALUE)
         );
         boardPanelLayout.setVerticalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(boardPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(B02, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(B01, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(B00, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(B10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(B12, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(B11, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(B21, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(B20, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(B22, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 448, Short.MAX_VALUE)
         );
 
         scorePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Puntuación"));
@@ -214,7 +167,7 @@ public class game3 extends javax.swing.JFrame {
             .addGroup(principalPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(principalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(scorePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -250,15 +203,6 @@ public class game3 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton B00;
-    private javax.swing.JButton B01;
-    private javax.swing.JButton B02;
-    private javax.swing.JButton B10;
-    private javax.swing.JButton B11;
-    private javax.swing.JButton B12;
-    private javax.swing.JButton B20;
-    private javax.swing.JButton B21;
-    private javax.swing.JButton B22;
     private javax.swing.JPanel boardPanel;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JButton newGameButton;
@@ -271,4 +215,9 @@ public class game3 extends javax.swing.JFrame {
     private javax.swing.JPanel turnPanel;
     private javax.swing.JLabel xLabel;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+    }
 }
