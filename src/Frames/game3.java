@@ -235,6 +235,7 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
                 button.setText("X");
                 button.setEnabled(false);
                 turn = codeO;
+                turnLabel.setText("O");
             }
         } else {
             if (button.getText().equals("")){
@@ -242,6 +243,7 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
                 button.setText("O");
                 button.setEnabled(false);
                 turn = codeX;   
+                                turnLabel.setText("X");
             }
         }
     }
