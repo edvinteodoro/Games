@@ -24,6 +24,8 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
     JButton board[][];
     int turn = 1;
     Color backGroundColor;
+    int wonGamesX = 0;
+    int wonGamesO = 0;
     
     /**
      * Creates new form game3
@@ -68,6 +70,7 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
         scoreOLabel = new javax.swing.JLabel();
         menuPanel = new javax.swing.JPanel();
         newGameButton = new javax.swing.JButton();
+        restartScoreButton = new javax.swing.JButton();
         turnPanel = new javax.swing.JPanel();
         turnLabel = new javax.swing.JLabel();
 
@@ -130,10 +133,17 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
 
         menuPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Menu"));
 
-        newGameButton.setText("Juego Nuevo");
+        newGameButton.setText("Nueva Partida");
         newGameButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newGameButtonActionPerformed(evt);
+            }
+        });
+
+        restartScoreButton.setText("Reiniciar Puntuacion");
+        restartScoreButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                restartScoreButtonActionPerformed(evt);
             }
         });
 
@@ -143,7 +153,9 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(newGameButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(newGameButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(restartScoreButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         menuPanelLayout.setVerticalGroup(
@@ -151,7 +163,9 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
             .addGroup(menuPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(newGameButton)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(restartScoreButton)
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         turnPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Turno"));
@@ -164,14 +178,14 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
         turnPanelLayout.setHorizontalGroup(
             turnPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(turnPanelLayout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(78, 78, 78)
                 .addComponent(turnLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         turnPanelLayout.setVerticalGroup(
             turnPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(turnPanelLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(40, 40, 40)
                 .addComponent(turnLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -223,12 +237,17 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
         clean();
     }//GEN-LAST:event_newGameButtonActionPerformed
 
+    private void restartScoreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartScoreButtonActionPerformed
+        restartGame();
+    }//GEN-LAST:event_restartScoreButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boardPanel;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JButton newGameButton;
     private javax.swing.JLabel oLabel;
     private javax.swing.JPanel principalPanel;
+    private javax.swing.JButton restartScoreButton;
     private javax.swing.JLabel scoreOLabel;
     private javax.swing.JPanel scorePanel;
     private javax.swing.JLabel scoreXLabel;
@@ -270,9 +289,13 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
             if (turn == codeO){
              JOptionPane.showMessageDialog(this, "Ganador Jugador: X ", "Partida Terminada", JOptionPane.INFORMATION_MESSAGE);   
               blockButtons();
+              wonGamesX++;
+              scoreXLabel.setText(String.valueOf(wonGamesX));
             } else {
              JOptionPane.showMessageDialog(this, "Ganador Jugador: O ", "Partida Terminada", JOptionPane.INFORMATION_MESSAGE);   
               blockButtons();
+              wonGamesO++;
+              scoreOLabel.setText(String.valueOf(wonGamesO));
             }
         }
     }
@@ -311,5 +334,13 @@ public class game3 extends javax.swing.JFrame implements ActionListener{
                 board[i][j].setEnabled(false);
             }
         }
+    }
+    
+    public void restartGame(){
+        clean();
+        wonGamesX = 0;
+        wonGamesO = 0;
+        scoreXLabel.setText(String.valueOf(wonGamesX));
+        scoreOLabel.setText(String.valueOf(wonGamesO));
     }
 }

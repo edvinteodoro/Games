@@ -166,6 +166,7 @@ public class framePrincipal extends javax.swing.JFrame {
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         game3.setVisible(true);
+        game3.restartGame();
     }//GEN-LAST:event_jLabel4MouseClicked
     /**
      * @param args the command line arguments
