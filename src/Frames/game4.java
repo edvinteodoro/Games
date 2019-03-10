@@ -259,12 +259,22 @@ public class game4 extends javax.swing.JFrame {
                 temporalBotton = boton;
             } else if (((temporalBotton != null) && !buttonIsAvailable(boton))) {
                 if (newGame.isGamerCoin(playing, temporalBotton)) {
-                    if (newGame.canKillSimpleCoin(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
-                        newGame.simpleCoinKill(temporalBotton, boton);
-                        temporalBotton = null;
+                    if (!newGame.isGamerCoinAQueen(temporalBotton)) {
+                        if (newGame.canKillSimpleCoin(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
+                            newGame.simpleCoinKill(temporalBotton, boton);
+                            temporalBotton = null;
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No se puede elminar", "Error", JOptionPane.ERROR_MESSAGE);
+                            temporalBotton = null;
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(this, "No se puede elminar", "Error", JOptionPane.ERROR_MESSAGE);
-                        temporalBotton = null;
+                        if (newGame.isFreeRoadToQueenAndKill(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
+                            newGame.simpleCoinKill(temporalBotton, boton);
+                            temporalBotton = null;
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No se puede elminar", "Error", JOptionPane.ERROR_MESSAGE);
+                            temporalBotton = null;
+                        }
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "It's opponent's coin", "Error", JOptionPane.ERROR_MESSAGE);
@@ -272,13 +282,24 @@ public class game4 extends javax.swing.JFrame {
                 }
             } else if ((temporalBotton != null) && buttonIsAvailable(boton)) {
                 if (newGame.isGamerCoin(playing, temporalBotton)) {
-                    if (newGame.canSimpleCoinMove(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
-                        newGame.simpleCoinMove(temporalBotton, boton);
-                        temporalBotton = null;
-                        changeTurn();
+                    if (!newGame.isGamerCoinAQueen(temporalBotton)) {
+                        if (newGame.canSimpleCoinMove(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
+                            newGame.simpleCoinMove(temporalBotton, boton);
+                            temporalBotton = null;
+                            changeTurn();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Movimiento Invalido", "Error", JOptionPane.ERROR_MESSAGE);
+                            temporalBotton = null;
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(this, "Movimiento Invalido", "Error", JOptionPane.ERROR_MESSAGE);
-                        temporalBotton = null;
+                        if (newGame.isFreeRoadToQueen(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
+                            newGame.simpleCoinMove(temporalBotton, boton);
+                            temporalBotton = null;
+                            changeTurn();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Movimiento Invalido", "Error", JOptionPane.ERROR_MESSAGE);
+                            temporalBotton = null;
+                        }
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "It's opponent's coin", "Error", JOptionPane.ERROR_MESSAGE);
@@ -286,7 +307,7 @@ public class game4 extends javax.swing.JFrame {
                 }
             }
         } catch (InputsVaciosException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             temporalBotton = null;
         }
     }

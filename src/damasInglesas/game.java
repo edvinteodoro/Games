@@ -33,6 +33,15 @@ public class game {
         return (aux.getIdGamer() == gamer);
     }
 
+    public boolean isGamerCoinAQueen(JButton boton) {
+        tableSquare aux = tablero[game.getXButton(boton)][game.getYButton(boton)];
+        if (aux.getIdGamer() == game.idGamer1) {
+            return getGamer1Coin(game.getXButton(boton), game.getYButton(boton)).isQueen();
+        } else {
+            return getGamer2Coin(game.getXButton(boton), game.getYButton(boton)).isQueen();
+        }
+    }
+
     /**
      * This method had been designed to verify if a coin is able to move along
      * in the table
@@ -76,6 +85,61 @@ public class game {
         }
     }
 
+    public boolean isFreeRoadToQueen(int xPosActualButton, int yPosActualButton, int xPosNextButton, int yPosNextButton) throws InputsVaciosException {
+        int x = xPosActualButton;
+        int y = yPosActualButton;
+
+        while (((x >= 0) && (x < game.dimension)) && ((y >= 0) && (y < game.dimension))) {
+            if (xPosNextButton > xPosActualButton)  x++;
+            else x--;
+            if (yPosNextButton > yPosActualButton) y++;
+            else  y--;
+
+            if ((tablero[x][y].idGamer == game.noId) && ((game.getXButton(getTableSquare(x, y).getBoton()) == xPosNextButton) && game.getYButton(getTableSquare(x, y).getBoton()) == yPosNextButton)) {
+                return  ((game.getXButton(getTableSquare(x, y).getBoton()) == xPosNextButton) && game.getYButton(getTableSquare(x, y).getBoton()) == yPosNextButton);
+            } else if ((tablero[x][y].idGamer == game.noId)) {
+                System.out.println("posicion valida");
+            } else {
+                throw new InputsVaciosException("Existe una ficha en: (" + xPosNextButton + "," + yPosNextButton + ")");
+            }
+        }
+        throw new InputsVaciosException("Movimiento invalido, Posicion fuera de rango de la reina");
+    }
+    
+    public boolean isFreeRoadToQueenAndKill(int xPosActualButton, int yPosActualButton, int xPosNextButton, int yPosNextButton) throws InputsVaciosException {
+        int x = xPosActualButton;
+        int y = yPosActualButton;
+        tableSquare auxTS = tablero[xPosNextButton][yPosNextButton];
+        tableSquare auxTS2 = tablero[xPosActualButton][yPosActualButton];
+
+        while (((x >= 0) && (x < game.dimension)) && ((y >= 0) && (y < game.dimension))) {
+            if (xPosNextButton > xPosActualButton)  x++;
+            else x--;
+            if (yPosNextButton > yPosActualButton) y++;
+            else  y--;
+
+             if ((tablero[x][y].idGamer != game.noId) && (auxTS.getIdGamer() != auxTS2.getIdGamer()) && ((game.getXButton(getTableSquare(x, y).getBoton()) == xPosNextButton) && game.getYButton(getTableSquare(x, y).getBoton()) == yPosNextButton)) {
+                  if (((x >= 0) && (x < game.dimension)) && ((y >= 0) && (y < game.dimension))) {
+                     if (xPosNextButton > xPosActualButton)  x++;
+                    else x--;
+                    if (yPosNextButton > yPosActualButton) y++;
+                    else  y--;
+                    
+                    if (tablero[x][y].idGamer == game.noId) return true;
+                    else throw new InputsVaciosException("Existe una ficha en: (" + xPosNextButton + "," + yPosNextButton + ")");
+                 } else {
+                       throw new InputsVaciosException("Movimiento invalido, Posicion imposible de alcanzar");
+                  }
+            } else if ((tablero[x][y].idGamer == game.noId)) {
+                System.out.println("posicion valida");
+            } else {
+                throw new InputsVaciosException("Existe una ficha en: (" + xPosNextButton + "," + yPosNextButton + ")");
+            }
+        }
+        throw new InputsVaciosException("Movimiento invalido, Posicion fuera de rango de la reina");
+    }
+
+    /**/
     /**
      * Verify if a coin can be kill by another
      *
@@ -131,6 +195,21 @@ public class game {
         tableSquare auxTSActual = tablero[game.getXButton(acualButton)][game.getYButton(acualButton)];
         tableSquare auxTSNext = tablero[game.getXButton(nextButton)][game.getYButton(nextButton)];
         tableSquare auxTSFinal = null;
+        
+        if (game.getXButton(nextButton) > game.getXButton(acualButton)) {
+            if (game.getYButton(nextButton) > game.getYButton(acualButton)) {
+                auxTSFinal = tablero[game.getXButton(nextButton) + 1][game.getYButton(nextButton) + 1];
+            } else {
+                auxTSFinal = tablero[game.getXButton(nextButton) + 1][game.getYButton(nextButton) - 1];
+            }
+        } else {
+            if (game.getYButton(nextButton) > game.getYButton(acualButton)) {
+                auxTSFinal = tablero[game.getXButton(nextButton) - 1][game.getYButton(nextButton) + 1];
+            } else {
+                auxTSFinal = tablero[game.getXButton(nextButton) - 1][game.getYButton(nextButton) - 1];
+            }
+        }
+        /*
         if (game.getXButton(acualButton) + 1 == game.getXButton(nextButton)) {
             if (auxTSActual.getIdGamer() == game.idGamer1) {
                 auxTSFinal = tablero[game.getXButton(nextButton) + 1][game.getYButton(nextButton) + 1];
@@ -144,6 +223,7 @@ public class game {
                 auxTSFinal = tablero[game.getXButton(nextButton) - 1][game.getYButton(nextButton) - 1];
             }
         }
+*/
         coin tempCoin = null;
 
         if (game.idGamer1 == auxTSActual.idGamer) {
@@ -156,6 +236,7 @@ public class game {
                     auxTSActual.getBoton().setIcon(null);
                     auxTSNext.setIdGamer(game.noId);
                     auxTSNext.getBoton().setIcon(null);
+                    gamer1.remove(getGamer1Coin(game.getXButton(nextButton), game.getYButton(nextButton)));
                     auxTSFinal.setIdGamer(game.idGamer1);
                     if (tempCoin.getyPosicion() == 7) {
                         tempCoin.setQueen(true);
@@ -165,8 +246,16 @@ public class game {
                     }
                     return auxTSActual.getBoton();
                 } else {
-                    //queen kill
-                    return null;
+                    tempCoin.setxPosicion(game.getXButton(auxTSFinal.getBoton()));
+                    tempCoin.setyPosicion(game.getYButton(auxTSFinal.getBoton()));
+                    auxTSActual.setIdGamer(game.noId);
+                    auxTSActual.getBoton().setIcon(null);
+                    auxTSNext.setIdGamer(game.noId);
+                    auxTSNext.getBoton().setIcon(null);
+                    gamer1.remove(getGamer1Coin(game.getXButton(nextButton), game.getYButton(nextButton)));
+                    auxTSFinal.setIdGamer(game.idGamer1);
+                    auxTSFinal.getBoton().setIcon(new ImageIcon("src/Images/Ficha4.png"));
+                    return auxTSActual.getBoton();
                 }
             } else {
                 throw new InputsVaciosException("No existe la ficha");
@@ -182,6 +271,7 @@ public class game {
                     auxTSActual.getBoton().setIcon(null);
                     auxTSNext.setIdGamer(game.noId);
                     auxTSNext.getBoton().setIcon(null);
+                    gamer2.remove(getGamer2Coin(game.getXButton(nextButton), game.getYButton(nextButton)));
                     auxTSFinal.setIdGamer(game.idGamer2);
                     if (tempCoin.getyPosicion() == 0) {
                         tempCoin.setQueen(true);
@@ -189,11 +279,19 @@ public class game {
                     } else {
                         auxTSFinal.getBoton().setIcon(new ImageIcon("src/Images/Ficha2.png"));
                     }
-                } else {
-                    //queen kill
-                    return null;
-                }
                 return auxTSActual.getBoton();
+                } else {
+                    tempCoin.setxPosicion(game.getXButton(auxTSFinal.getBoton()));
+                    tempCoin.setyPosicion(game.getYButton(auxTSFinal.getBoton()));
+                    auxTSActual.setIdGamer(game.noId);
+                    auxTSActual.getBoton().setIcon(null);
+                    auxTSNext.setIdGamer(game.noId);
+                    auxTSNext.getBoton().setIcon(null);
+                    gamer2.remove(getGamer2Coin(game.getXButton(nextButton), game.getYButton(nextButton)));
+                    auxTSFinal.setIdGamer(game.idGamer2);
+                    auxTSFinal.getBoton().setIcon(new ImageIcon("src/Images/Ficha3.png"));
+                    return auxTSActual.getBoton();
+                }
             } else {
                 throw new InputsVaciosException("No existe la ficha");
             }
@@ -222,7 +320,12 @@ public class game {
                         auxTSNext.getBoton().setIcon(new ImageIcon("src/Images/Ficha1.png"));
                     }
                 } else {
-                    //to move the queen
+                    tempCoin.setxPosicion(game.getXButton(nextButton));
+                    tempCoin.setyPosicion(game.getYButton(nextButton));
+                    auxTSActual.setIdGamer(game.noId);
+                    auxTSActual.getBoton().setIcon(null);
+                    auxTSNext.setIdGamer(game.idGamer1);
+                    auxTSNext.getBoton().setIcon(new ImageIcon("src/Images/Ficha4.png"));
                 }
             } else {
                 throw new InputsVaciosException("No existe la ficha");
@@ -244,7 +347,12 @@ public class game {
                         auxTSNext.getBoton().setIcon(new ImageIcon("src/Images/Ficha2.png"));
                     }
                 } else {
-                    //to move the queen
+                    tempCoin.setxPosicion(game.getXButton(nextButton));
+                    tempCoin.setyPosicion(game.getYButton(nextButton));
+                    auxTSActual.setIdGamer(game.noId);
+                    auxTSActual.getBoton().setIcon(null);
+                    auxTSNext.setIdGamer(game.idGamer2);
+                    auxTSNext.getBoton().setIcon(new ImageIcon("src/Images/Ficha3.png"));
                 }
             } else {
                 throw new InputsVaciosException("No existe la ficha");
