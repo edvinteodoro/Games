@@ -252,64 +252,75 @@ public class game4 extends javax.swing.JFrame {
     }
 
     private void selectOrMove(java.awt.event.ActionEvent ev, JButton boton) {
-        try {
-            if ((temporalBotton != null) && (temporalBotton == boton)) {
+        if (newGame.getGamer1().size() == 0) {
+            this.setVisible(false);
+            principal.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Won " + newGame.getName2(), "End of game", JOptionPane.INFORMATION_MESSAGE);
+        } else if (newGame.getGamer2().size() == 0) {
+            this.setVisible(false);
+            principal.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Won " + newGame.getName1(), "End of game", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            try {
+                if ((temporalBotton != null) && (temporalBotton == boton)) {
+                    temporalBotton = null;
+                } else if ((temporalBotton == null) && !buttonIsAvailable(boton)) {
+                    temporalBotton = boton;
+                } else if (((temporalBotton != null) && !buttonIsAvailable(boton))) {
+                    if (newGame.isGamerCoin(playing, temporalBotton)) {
+                        if (!newGame.isGamerCoinAQueen(temporalBotton)) {
+                            if (newGame.canKillSimpleCoin(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
+                                newGame.simpleCoinKill(temporalBotton, boton);
+                                temporalBotton = null;
+                            } else {
+                                JOptionPane.showMessageDialog(this, "No se puede elminar", "Error", JOptionPane.ERROR_MESSAGE);
+                                temporalBotton = null;
+                            }
+                        } else {
+                            if (newGame.isFreeRoadToQueenAndKill(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
+                                newGame.simpleCoinKill(temporalBotton, boton);
+                                temporalBotton = null;
+                            } else {
+                                JOptionPane.showMessageDialog(this, "No se puede elminar", "Error", JOptionPane.ERROR_MESSAGE);
+                                temporalBotton = null;
+                            }
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "It's opponent's coin", "Error", JOptionPane.ERROR_MESSAGE);
+                        temporalBotton = null;
+                    }
+                } else if ((temporalBotton != null) && buttonIsAvailable(boton)) {
+                    if (newGame.isGamerCoin(playing, temporalBotton)) {
+                        if (!newGame.isGamerCoinAQueen(temporalBotton)) {
+                            if (newGame.canSimpleCoinMove(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
+                                newGame.simpleCoinMove(temporalBotton, boton);
+                                temporalBotton = null;
+                                changeTurn();
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Movimiento Invalido", "Error", JOptionPane.ERROR_MESSAGE);
+                                temporalBotton = null;
+                            }
+                        } else {
+                            if (newGame.isFreeRoadToQueen(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
+                                newGame.simpleCoinMove(temporalBotton, boton);
+                                temporalBotton = null;
+                                changeTurn();
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Movimiento Invalido", "Error", JOptionPane.ERROR_MESSAGE);
+                                temporalBotton = null;
+                            }
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "It's opponent's coin", "Error", JOptionPane.ERROR_MESSAGE);
+                        temporalBotton = null;
+                    }
+                }
+            } catch (InputsVaciosException | HeadlessException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 temporalBotton = null;
-            } else if ((temporalBotton == null) && !buttonIsAvailable(boton)) {
-                temporalBotton = boton;
-            } else if (((temporalBotton != null) && !buttonIsAvailable(boton))) {
-                if (newGame.isGamerCoin(playing, temporalBotton)) {
-                    if (!newGame.isGamerCoinAQueen(temporalBotton)) {
-                        if (newGame.canKillSimpleCoin(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
-                            newGame.simpleCoinKill(temporalBotton, boton);
-                            temporalBotton = null;
-                        } else {
-                            JOptionPane.showMessageDialog(this, "No se puede elminar", "Error", JOptionPane.ERROR_MESSAGE);
-                            temporalBotton = null;
-                        }
-                    } else {
-                        if (newGame.isFreeRoadToQueenAndKill(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
-                            newGame.simpleCoinKill(temporalBotton, boton);
-                            temporalBotton = null;
-                        } else {
-                            JOptionPane.showMessageDialog(this, "No se puede elminar", "Error", JOptionPane.ERROR_MESSAGE);
-                            temporalBotton = null;
-                        }
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(this, "It's opponent's coin", "Error", JOptionPane.ERROR_MESSAGE);
-                    temporalBotton = null;
-                }
-            } else if ((temporalBotton != null) && buttonIsAvailable(boton)) {
-                if (newGame.isGamerCoin(playing, temporalBotton)) {
-                    if (!newGame.isGamerCoinAQueen(temporalBotton)) {
-                        if (newGame.canSimpleCoinMove(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
-                            newGame.simpleCoinMove(temporalBotton, boton);
-                            temporalBotton = null;
-                            changeTurn();
-                        } else {
-                            JOptionPane.showMessageDialog(this, "Movimiento Invalido", "Error", JOptionPane.ERROR_MESSAGE);
-                            temporalBotton = null;
-                        }
-                    } else {
-                        if (newGame.isFreeRoadToQueen(getXButton(temporalBotton), getYButton(temporalBotton), getXButton(boton), getYButton(boton))) {
-                            newGame.simpleCoinMove(temporalBotton, boton);
-                            temporalBotton = null;
-                            changeTurn();
-                        } else {
-                            JOptionPane.showMessageDialog(this, "Movimiento Invalido", "Error", JOptionPane.ERROR_MESSAGE);
-                            temporalBotton = null;
-                        }
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(this, "It's opponent's coin", "Error", JOptionPane.ERROR_MESSAGE);
-                    temporalBotton = null;
-                }
             }
-        } catch (InputsVaciosException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            temporalBotton = null;
         }
+
     }
 
     private void addPixels(Container pane) {
