@@ -6,10 +6,11 @@
 package game1;
 
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
 
 /**
  *
@@ -18,8 +19,31 @@ import javax.swing.JPanel;
 public class framePrincipalGame1 extends javax.swing.JFrame {
 
     int numeroDados;
-    playerController controller = new playerController();
+    playerController controller = new playerController(this);
     int numberPlayersGame;
+
+    JLabel labelImageOne = new JLabel();
+    JLabel labelImageTwo = new JLabel();
+    
+
+    int tiempoHiloMiliseg = 600;
+
+    int x1, y1;
+    int x2, y2;
+
+    int turnoJugador = 0;
+    int turnoJugador2 = 1;
+    
+    int posFinal = 0;
+    int posFinal2 = 0;
+
+    Thread hilo;
+    Thread hilo2;
+    
+    int numeroCualquiera = 2;
+    //int numeroRandom = 6;
+
+    
     /**
      * Creates new form ventana_Principal
      */
@@ -28,14 +52,25 @@ public class framePrincipalGame1 extends javax.swing.JFrame {
         int number = Integer.parseInt(numberOfPlayers);
         numberPlayersGame = number;
         for (int i = 0; i < number; i++) {
-            int numberOfId = i+1;
+            int numberOfId = i + 1;
             String id = String.valueOf(numberOfId);
             frameEntryGame1 entry = new frameEntryGame1(id, controller, number, this);
             controller.saveEntryFrame(entry);
             entry.setVisible(true);
         }
+
+        jPanel3.setFocusable(true);
+
+        jPanel3.setLayout(null);
+        jPanel3.add(labelImageOne);
+        jPanel3.add(labelImageTwo);
         
+        labelImageOne.setBounds(28, 592, 50, 55);
+        labelImageTwo.setBounds(28, 592, 50, 55);
+
         
+
+        /*timer.start();*/
     }
 
     /**
@@ -47,6 +82,7 @@ public class framePrincipalGame1 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -56,23 +92,38 @@ public class framePrincipalGame1 extends javax.swing.JFrame {
         label_dado1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel3.setOpaque(false);
+        jPanel3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel3KeyPressed(evt);
+            }
+        });
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, 910, 660));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/game1.1.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(226, 42, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Capture it 2", 2, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(200, 94, 15));
-        jLabel3.setText("SERPIENTE Y ESCALERAS");
+        jLabel3.setText("SERPIENTEs Y ESCALERAS");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, -1, -1));
 
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 710, -1, -1));
-
-        jLabel4.setText("jLabel2");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1320, 60, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1270, 60, 90, 20));
 
         jPanel1.setBackground(new java.awt.Color(146, 217, 181));
         jPanel1.setLayout(null);
@@ -85,7 +136,7 @@ public class framePrincipalGame1 extends javax.swing.JFrame {
         jPanel1.add(label_dado1);
         label_dado1.setBounds(10, 10, 190, 180);
 
-        jButton1.setText("TIRAR");
+        jButton1.setText("THROW");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -97,7 +148,55 @@ public class framePrincipalGame1 extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 120, 210, 570));
 
         jPanel2.setBackground(new java.awt.Color(146, 217, 181));
+        jPanel2.setLayout(null);
+
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton4);
+        jButton4.setBounds(10, 10, 112, 132);
+
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton5);
+        jButton5.setBounds(10, 290, 112, 132);
+
+        jLabel5.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jPanel2.add(jLabel5);
+        jLabel5.setBounds(30, 170, 130, 30);
+
+        jLabel6.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jPanel2.add(jLabel6);
+        jLabel6.setBounds(30, 210, 130, 30);
+
+        jLabel8.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jPanel2.add(jLabel8);
+        jLabel8.setBounds(30, 500, 130, 30);
+
+        jLabel7.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jPanel2.add(jLabel7);
+        jLabel7.setBounds(30, 460, 130, 30);
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/game1_user_images/estrellaMini.jpg"))); // NOI18N
+        jPanel2.add(jLabel9);
+        jLabel9.setBounds(130, 50, 60, 50);
+        jPanel2.add(jLabel10);
+        jLabel10.setBounds(130, 330, 60, 50);
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 200, 570));
+
+        jButton2.setText("EXIT");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 70, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -106,58 +205,8608 @@ public class framePrincipalGame1 extends javax.swing.JFrame {
         // TODO add your handling code here:
         Random random = new Random();
         int dado1 = 0;
-        dado1 = ((int)(random.nextDouble()*6));
+        dado1 = ((int) (random.nextDouble() * 6));
         int dado2 = 0;
-        dado2 = ((int)(random.nextDouble()*6));
-        
-        if(dado1 == 0){
+        dado2 = ((int) (random.nextDouble() * 6));
+
+        if (dado1 == 0) {
             label_dado1.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado1.jpg")));
-        }else if(dado1 == 1){
+        } else if (dado1 == 1) {
             label_dado1.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado2.jpg")));
-        }else if(dado1 == 2){
+        } else if (dado1 == 2) {
             label_dado1.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado3.jpg")));
-        }else if(dado1 == 3){
+        } else if (dado1 == 3) {
             label_dado1.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado4.jpg")));
-        }else if(dado1 == 4){
+        } else if (dado1 == 4) {
             label_dado1.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado5.jpg")));
-        }else if(dado1 == 5){
+        } else if (dado1 == 5) {
             label_dado1.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado6.jpg")));
         }
-        
-        
-        if(dado2 == 0){
+
+        if (dado2 == 0) {
             label_dado2.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado1.jpg")));
-        }else if(dado2 == 1){
+        } else if (dado2 == 1) {
             label_dado2.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado2.jpg")));
-        }else if(dado2 == 2){
+        } else if (dado2 == 2) {
             label_dado2.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado3.jpg")));
-        }else if(dado2 == 3){
+        } else if (dado2 == 3) {
             label_dado2.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado4.jpg")));
-        }else if(dado2 == 4){
+        } else if (dado2 == 4) {
             label_dado2.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado5.jpg")));
-        }else if(dado2 == 5){
+        } else if (dado2 == 5) {
             label_dado2.setIcon(new ImageIcon(getClass().getResource("/Images/game1.dado6.jpg")));
         }
-        
+
         dado1++;
         dado2++;
-        int numeroTotal = dado1+dado2;
+        int numeroTotal = dado1 + dado2;
         numeroDados = numeroTotal;
+
+        JOptionPane.showMessageDialog(this, "DEBE AVANZAR " + numeroTotal + " ESPACIOS", "*****ATENCION*****", HEIGHT);
+
+        jButton1.setEnabled(false);
         
-        JOptionPane.showMessageDialog(this, "DEBE AVANZAR "+ numeroTotal + " ESPACIOS", "*****ATENCION*****", HEIGHT);
+        int numero = numeroCualquiera%2;
+        if( (numero) == 0 ){
+            movePlayer1(controller.returnPosition(0), numeroTotal);
+            JOptionPane.showMessageDialog(this, "ES EL TURNO DEL JUGADOR --------> "+ controller.returnName(1));
+            jLabel9.setIcon(null);
+            jLabel10.setIcon(new ImageIcon(getClass().getResource("/game1_user_images/estrellaMini.jpg")));
+            
+        }else{
+            movePlayer2(controller.returnPosition(1), numeroTotal);
+            jLabel8.setText(""+ controller.returnPosition(1));
+            JOptionPane.showMessageDialog(this, "ES EL TURNO DEL JUGADOR --------> "+ controller.returnName(0));
+            jLabel10.setIcon(null);
+            jLabel9.setIcon(new ImageIcon(getClass().getResource("/game1_user_images/estrellaMini.jpg")));
+            
+        }
         
+        System.out.println("El resultado es:  " + numero);
+        
+        numeroCualquiera++;
+        
+        jButton1.setEnabled(true);
+
+        /*
+         //LLEGA AL 53
+        if(numeroRandom == 8){
+            numeroRandom = 3;
+        }
+        
+        LLEGA AL 53
+        if(numeroRandom == 3){
+            numeroRandom = 2;
+        }
+        */
+        
+        /*  LLEGA AL 64
+        if(numeroRandom == 9){
+            numeroRandom = 7;
+        }
+        
+        LLEGA AL 64
+        if(numeroRandom == 9){
+            numeroRandom = 4;
+        }
+        
+        if(numeroRandom == 5){
+            numeroRandom = 3;
+        }
+        
+        */
+        
+        
+        
+        /*
+        movePlayer1(controller.returnPosition(turnoJugador), numeroRandom);
+        numeroRandom = numeroRandom + 1;
+        */
+        
+        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jPanel3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel3KeyPressed
+        // TODO add your handling code here:
+
+        /*
+        x = labelImageOne.getX();
+        y = labelImageOne.getY();
+        
+        System.out.println("ICONO 1 ----> " + labelImageOne.getLocation());
+        
+        
+        switch(evt.getExtendedKeyCode()){
+            
+            
+            case KeyEvent.VK_UP: 
+                if(labelImageOne.getY()>=7){
+                    labelImageOne.setLocation(x, y-10);
+                }
+                break;
+                
+            case KeyEvent.VK_DOWN: 
+                if(labelImageOne.getY()<=592){
+                    labelImageOne.setLocation(x, y+10);
+                }
+                break;
+            
+           case KeyEvent.VK_RIGHT: 
+                if(labelImageOne.getX()<=846){
+                    labelImageOne.setLocation(x+10, y);
+                }
+                break;
+                
+            case KeyEvent.VK_LEFT: 
+                if(labelImageOne.getX()>=20){
+                    labelImageOne.setLocation(x-10, y);
+                }
+                break;
+                
+                
+        }
+         */
+
+    }//GEN-LAST:event_jPanel3KeyPressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public void selectInsertion(int number, String image, String userName, int posicion) {
+        if (number == 1) {
+            insertPlayerOne(image, userName, posicion);
+        } else if (number == 2) {
+            insertPlayerTwo(image, userName, posicion);
+        } else {
+
+        }
+    }
+
+    public void insertPlayerOne(String image, String userName, int posicion) {
+        jLabel5.setText(userName);
+        jLabel6.setText("POSICION: " + posicion);
+        String imageName = "/game1_user_images/" + image + ".jpg";
+        jButton4.setIcon(new ImageIcon(getClass().getResource(imageName)));
+
+        String imageName2 = "/game1_user_images/" + image + "mini.jpg";
+        labelImageOne.setIcon(new ImageIcon(getClass().getResource(imageName2)));
+
+    }
+
+    public void insertPlayerTwo(String image, String userName, int posicion) {
+        jLabel7.setText(userName);
+        jLabel8.setText("POSICION: " + posicion);
+        String imageName = "/game1_user_images/" + image + ".jpg";
+        jButton5.setIcon(new ImageIcon(getClass().getResource(imageName)));
+
+        String imageName2 = "/game1_user_images/" + image + "mini.jpg";
+        labelImageTwo.setIcon(new ImageIcon(getClass().getResource(imageName2)));
+    }
+
+    
+    
+    
+    
+    public void movePlayer1(int cuadroActual, int cuadrosAvanzar) {
+        
+        jLabel8.setText("Posicion: " + controller.returnPosition(1));
+
+        int cuadroFinal = cuadroActual + cuadrosAvanzar;
+        posFinal = cuadroFinal;
+        
+        
+        System.out.println("Cuadro Actual: "+cuadroActual+"       Cuadros Avanzar: "+cuadrosAvanzar+"      CuadroFinal: "+cuadroFinal);
+
+        if ((cuadroActual >= 0 && cuadroFinal <= 10)) {
+
+            if (cuadrosAvanzar == 4) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < cuadroFinal; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+
+                            //ACA SUBE LA PRIMERA ESCALERA
+                            for (int i = 0; i < 5; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba = controller.moveABoxStairOneY(y1);
+                                int movimientoIzquierda = controller.moveABoxStairOneX(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda, movimientoArriba);
+                                y1 = movimientoArriba;
+                                x1 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador, 58);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            } else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < cuadroFinal; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((11 > cuadroActual && 10 < cuadroFinal)) {
+
+            if (cuadrosAvanzar == 12  && cuadroActual == 9) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 10; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 11; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12  && cuadroActual == 10) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 11; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 10; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 11  && cuadroActual == 10) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 11; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            } else {
+
+                if (cuadroFinal == 14) {
+                    Runnable hiloFor = new Runnable() {
+                        public void run() {
+                            Thread actual = Thread.currentThread();
+                            synchronized (actual) {
+
+                                for (int i = cuadroActual; i < 10; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                    labelImageOne.setLocation(movimientoDerecho, y1);
+                                    x1 = movimientoDerecho;
+                                    //System.out.println(movimientoDerecho + "    " + y1);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba = controller.moveABoxUP(y1);
+                                labelImageOne.setLocation(x1, movimientoArriba);
+                                y1 = movimientoArriba;
+                                //System.out.println(x1 + "    " + movimientoArriba);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                for (int i = 11; i < cuadroFinal; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                    labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                    x1 = movimientoIzquierdo;
+                                    //System.out.println(movimientoIzquierdo + "    " + y1);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+
+                                //ACA SUBE A LA SEGUNDA ESCALERA
+                                for (int i = 0; i < 5; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoArriba2 = controller.moveABoxStairTwoY(y1);
+                                    int movimientoIzquierda = controller.moveABoxStairTwoX(x1);
+
+                                    labelImageOne.setLocation(movimientoIzquierda, movimientoArriba2);
+                                    y1 = movimientoArriba2;
+                                    x1 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador, 49);
+                            }
+                        }
+
+                    };
+
+                    hilo = new Thread(hiloFor);
+                    hilo.start();
+
+                } else {
+                    Runnable hiloFor = new Runnable() {
+                        public void run() {
+                            Thread actual = Thread.currentThread();
+                            synchronized (actual) {
+
+                                for (int i = cuadroActual; i < 10; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                    labelImageOne.setLocation(movimientoDerecho, y1);
+                                    x1 = movimientoDerecho;
+                                    //System.out.println(movimientoDerecho + "    " + y1);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba = controller.moveABoxUP(y1);
+                                labelImageOne.setLocation(x1, movimientoArriba);
+                                y1 = movimientoArriba;
+                                //System.out.println(x1 + "    " + movimientoArriba);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                if(cuadroFinal ==  11){
+                                    
+                                }else{
+                                    for (int i = 11; i < cuadroFinal; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                    labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                    x1 = movimientoIzquierdo;
+                                    //System.out.println(movimientoIzquierdo + "    " + y1);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                    }
+                                }
+                                
+                                controller.setPosition(turnoJugador, posFinal);
+
+                            }
+                        }
+
+                    };
+
+                    hilo = new Thread(hiloFor);
+                    hilo.start();
+                }
+
+            }
+
+        } else if ((cuadroActual > 10 && cuadroFinal <= 20)) {
+            
+            if(cuadroFinal == 14){
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                            labelImageOne.setLocation(movimientoIzquierdo, y1);
+                            x1 = movimientoIzquierdo;
+                            //System.out.println(movimientoIzquierdo + "    " + y1);
+
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+
+                        //ACA SUBE A LA SEGUNDA ESCALERA
+                        for (int i = 0; i < 5; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxStairTwoY(y1);
+                            int movimientoIzquierda = controller.moveABoxStairTwoX(x1);
+
+                            labelImageOne.setLocation(movimientoIzquierda, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            x1 = movimientoIzquierda;
+
+                            //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        controller.setPosition(turnoJugador, 49);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            }else{
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                            labelImageOne.setLocation(movimientoIzquierdo, y1);
+                            x1 = movimientoIzquierdo;
+                            //System.out.println(movimientoIzquierdo + "    " + y1);
+
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+
+                        controller.setPosition(turnoJugador, posFinal);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            }
+
+            
+
+        } else if ((20 >= cuadroActual && 20 < cuadroFinal)) {
+
+            if (cuadrosAvanzar == 12 && cuadroActual == 19) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 20; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 21; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 20) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 21; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 20; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 11 && cuadroActual == 20) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 21; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            } else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 20; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal==21){
+                                
+                            }else{
+                                for (int i = 21; i < cuadroFinal; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((cuadroActual > 20 && cuadroFinal <= 30)) {
+
+            Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                            labelImageOne.setLocation(movimientoDerecho, y1);
+                            x1 = movimientoDerecho;
+                            //System.out.println(movimientoDerecho + "    " + y1);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                        controller.setPosition(turnoJugador, posFinal);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+
+        } else if ((30 >= cuadroActual && 30 < cuadroFinal)) {
+
+            if (cuadrosAvanzar == 12 && cuadroActual == 29) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 30; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 31; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 30) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 31; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 30; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            
+            
+            
+            }else if (cuadrosAvanzar == 11 && cuadroActual == 30) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 31; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            
+            
+            
+            }else if(cuadroFinal == 38){
+                
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 30; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal == 31){
+                                
+                            }else{
+                                for (int i = 31; i < cuadroFinal; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            }
+                            
+                            
+                            //ACA BAJA LA PRIMERA SNAKE
+                            
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba2 = controller.moveABoxSnakeOneY1(y1);
+                                int movimientoIzquierda = controller.moveABoxSnakeOneX1(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda, movimientoArriba2);
+                                y1 = movimientoArriba2;
+                                x1 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeOneY2(y1);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeOneX2(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y1 = movimientoArriba3;
+                                x1 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeOneY3(y1);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeOneX3(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y1 = movimientoArriba4;
+                                x1 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeOneY4(y1);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeOneX4(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y1 = movimientoArriba5;
+                                x1 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeOneY5(y1);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeOneX5(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y1 = movimientoArriba6;
+                                x1 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador, 20);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+                
+            }else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 30; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal == 31){
+                                
+                            }else{
+                                for (int i = 31; i < cuadroFinal; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((cuadroActual > 30 && cuadroFinal <= 40)) {
+            
+            
+            if(cuadroFinal == 38){
+                
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+                        
+                        //ACA BAJA LA PRIMERA SNAKE
+                            
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba2 = controller.moveABoxSnakeOneY1(y1);
+                                int movimientoIzquierda = controller.moveABoxSnakeOneX1(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda, movimientoArriba2);
+                                y1 = movimientoArriba2;
+                                x1 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeOneY2(y1);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeOneX2(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y1 = movimientoArriba3;
+                                x1 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeOneY3(y1);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeOneX3(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y1 = movimientoArriba4;
+                                x1 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeOneY4(y1);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeOneX4(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y1 = movimientoArriba5;
+                                x1 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeOneY5(y1);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeOneX5(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y1 = movimientoArriba6;
+                                x1 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador, 20);
+                            
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            
+            }else{
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                            labelImageOne.setLocation(movimientoIzquierdo, y1);
+                            x1 = movimientoIzquierdo;
+                            //System.out.println(movimientoIzquierdo + "    " + y1);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        controller.setPosition(turnoJugador, posFinal);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            }
+
+            
+
+        } else if ((40 >= cuadroActual && 40 < cuadroFinal)) {
+
+            if (cuadrosAvanzar == 12 && cuadroActual == 39) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 40; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 41; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            //ACA BAJA LA SEGUNDA SNAKE
+                                for (int i = 0; i < 5; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoArriba3 = controller.moveABoxSnakeTwoY(y1);
+                                    int movimientoIzquierda = controller.moveABoxSnakeTwoX(x1);
+
+                                    labelImageOne.setLocation(movimientoIzquierda, movimientoArriba3);
+                                    y1 = movimientoArriba3;
+                                    x1 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba3);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador, 10);
+                            
+                            
+                            
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 40) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 41; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 40; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 11 && cuadroActual == 40) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 41; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            //ACA BAJA LA SEGUNDA SNAKE
+                                for (int i = 0; i < 5; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoArriba3 = controller.moveABoxSnakeTwoY(y1);
+                                    int movimientoIzquierda = controller.moveABoxSnakeTwoX(x1);
+
+                                    labelImageOne.setLocation(movimientoIzquierda, movimientoArriba3);
+                                    y1 = movimientoArriba3;
+                                    x1 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba3);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador, 10);
+                            
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            } else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 40; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal==41){
+                                
+                            }else{
+                                for (int i = 41; i < cuadroFinal; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((cuadroActual > 40 && cuadroFinal <= 50)) {
+
+            Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                            labelImageOne.setLocation(movimientoDerecho, y1);
+                            x1 = movimientoDerecho;
+                            //System.out.println(movimientoDerecho + "    " + y1);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                        controller.setPosition(turnoJugador, posFinal);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+
+        } else if ((50 >= cuadroActual && 50 < cuadroFinal)) {
+
+            ///////////////////////////////////////////////////////////////////
+            if (cuadrosAvanzar == 12 && cuadroActual == 49) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 50; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 51; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 50) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 51; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 50; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 11 && cuadroActual == 50) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 51; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            } else {
+
+                if (cuadroFinal == 53) {
+
+                    Runnable hiloFor = new Runnable() {
+                        public void run() {
+                            Thread actual = Thread.currentThread();
+                            synchronized (actual) {
+
+                                for (int i = cuadroActual; i < 50; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                    labelImageOne.setLocation(movimientoDerecho, y1);
+                                    x1 = movimientoDerecho;
+                                    //System.out.println(movimientoDerecho + "    " + y1);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba = controller.moveABoxUP(y1);
+                                labelImageOne.setLocation(x1, movimientoArriba);
+                                y1 = movimientoArriba;
+                                //System.out.println(x1 + "    " + movimientoArriba);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                for (int i = 51; i < cuadroFinal; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                    labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                    x1 = movimientoIzquierdo;
+                                    //System.out.println(movimientoIzquierdo + "    " + y1);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                
+                                
+                                //ACA SUBE A LA TERCERA ESCALERA
+                                for (int i = 0; i < 2; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoArriba2 = controller.moveABoxStairThreeAndFourY(y1);
+                                    int movimientoIzquierda = controller.moveABoxStairThreeX(x1);
+
+                                    labelImageOne.setLocation(movimientoIzquierda, movimientoArriba2);
+                                    y1 = movimientoArriba2;
+                                    x1 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador, 72);
+
+                                
+                            }
+                        }
+
+                    };
+
+                    hilo = new Thread(hiloFor);
+                    hilo.start();
+
+                }else if (cuadroFinal == 51) {
+
+                    Runnable hiloFor = new Runnable() {
+                        public void run() {
+                            Thread actual = Thread.currentThread();
+                            synchronized (actual) {
+
+                                for (int i = cuadroActual; i < 50; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                    labelImageOne.setLocation(movimientoDerecho, y1);
+                                    x1 = movimientoDerecho;
+                                    //System.out.println(movimientoDerecho + "    " + y1);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba = controller.moveABoxUP(y1);
+                                labelImageOne.setLocation(x1, movimientoArriba);
+                                y1 = movimientoArriba;
+                                //System.out.println(x1 + "    " + movimientoArriba);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                if(cuadroFinal==51){
+                                    
+                                }else{
+                                    for (int i = 51; i < cuadroFinal; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                    labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                    x1 = movimientoIzquierdo;
+                                    //System.out.println(movimientoIzquierdo + "    " + y1);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                }
+                                
+                                
+                                //ACA BAJA LA SEGUNDA SNAKE
+                                for (int i = 0; i < 5; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoArriba3 = controller.moveABoxSnakeTwoY(y1);
+                                    int movimientoIzquierda = controller.moveABoxSnakeTwoX(x1);
+
+                                    labelImageOne.setLocation(movimientoIzquierda, movimientoArriba3);
+                                    y1 = movimientoArriba3;
+                                    x1 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba3);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador, 10);
+                                
+
+                            }
+                        }
+
+                    };
+
+                    hilo = new Thread(hiloFor);
+                    hilo.start();
+
+                } else {
+                    Runnable hiloFor = new Runnable() {
+                        public void run() {
+                            Thread actual = Thread.currentThread();
+                            synchronized (actual) {
+
+                                for (int i = cuadroActual; i < 50; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                    labelImageOne.setLocation(movimientoDerecho, y1);
+                                    x1 = movimientoDerecho;
+                                    //System.out.println(movimientoDerecho + "    " + y1);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba = controller.moveABoxUP(y1);
+                                labelImageOne.setLocation(x1, movimientoArriba);
+                                y1 = movimientoArriba;
+                                //System.out.println(x1 + "    " + movimientoArriba);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                if(cuadroFinal==51){
+                                    
+                                }else{
+                                    for (int i = 51; i < cuadroFinal; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                    labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                    x1 = movimientoIzquierdo;
+                                    //System.out.println(movimientoIzquierdo + "    " + y1);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                }
+                                
+                                controller.setPosition(turnoJugador, posFinal);
+
+                            }
+                        }
+
+                    };
+
+                    hilo = new Thread(hiloFor);
+                    hilo.start();
+                }
+
+            }
+
+        } else if ((cuadroActual > 50 && cuadroFinal <= 60)) {
+            
+            if(cuadroFinal == 53){
+                
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                            labelImageOne.setLocation(movimientoIzquierdo, y1);
+                            x1 = movimientoIzquierdo;
+                            //System.out.println(movimientoIzquierdo + "    " + y1);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                        }
+                        
+                        
+                        //ACA SUBE A LA TERCERA ESCALERA
+                                for (int i = 0; i < 2; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoArriba2 = controller.moveABoxStairThreeAndFourY(y1);
+                                    int movimientoIzquierda = controller.moveABoxStairThreeX(x1);
+
+                                    labelImageOne.setLocation(movimientoIzquierda, movimientoArriba2);
+                                    y1 = movimientoArriba2;
+                                    x1 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador, 72);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            
+            }else{
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                            labelImageOne.setLocation(movimientoIzquierdo, y1);
+                            x1 = movimientoIzquierdo;
+                            //System.out.println(movimientoIzquierdo + "    " + y1);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            controller.setPosition(turnoJugador, posFinal);
+                        }
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            }
+
+            
+
+        } else if ((60 >= cuadroActual && 60 < cuadroFinal)) {
+            
+            if (cuadrosAvanzar == 12 && cuadroActual == 59){
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 60; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 61; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 60){
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 61; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 60; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 11 && cuadroActual == 60){
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 61; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if(cuadroFinal == 64){
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 60; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 61; i < cuadroFinal; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            
+                            //ACA SUBE A LA CUARTA ESCALERA
+                                for (int i = 0; i < 2; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoArriba2 = controller.moveABoxStairThreeAndFourY(y1);
+                                    int movimientoIzquierda = controller.moveABoxStairFourX(x1);
+
+                                    labelImageOne.setLocation(movimientoIzquierda, movimientoArriba2);
+                                    y1 = movimientoArriba2;
+                                    x1 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador, 83);
+                            
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+                
+                
+            }else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 60; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal==61){
+                                
+                            }else{
+                                for (int i = 61; i < cuadroFinal; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((cuadroActual > 60 && cuadroFinal <= 70)) {
+            
+            if(cuadroFinal == 64){
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                            labelImageOne.setLocation(movimientoDerecho, y1);
+                            x1 = movimientoDerecho;
+                            //System.out.println(movimientoDerecho + "    " + y1);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                        
+                        
+                        //ACA SUBE A LA CUARTA ESCALERA
+                                for (int i = 0; i < 2; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoArriba2 = controller.moveABoxStairThreeAndFourY(y1);
+                                    int movimientoIzquierda = controller.moveABoxStairFourX(x1);
+
+                                    labelImageOne.setLocation(movimientoIzquierda, movimientoArriba2);
+                                    y1 = movimientoArriba2;
+                                    x1 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador, 83);
+                                
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+                
+            }else{
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                            labelImageOne.setLocation(movimientoDerecho, y1);
+                            x1 = movimientoDerecho;
+                            //System.out.println(movimientoDerecho + "    " + y1);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                        controller.setPosition(turnoJugador, posFinal);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            }
+
+            
+        } else if ((70 >= cuadroActual && 70 < cuadroFinal)) {
+
+            if (cuadrosAvanzar == 12 && cuadroActual == 69) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 70; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 71; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 70) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 71; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 70; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 11 && cuadroActual == 70) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 71; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if(cuadroFinal == 76){
+                
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 70; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal==71){
+                                
+                            }else{
+                                for (int i = 71; i < cuadroFinal; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            }
+                            
+                            //ACA BAJA LA TERCERA SNAKE
+                            
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba2 = controller.moveABoxSnakeThreeY1(y1);
+                                int movimientoIzquierda = controller.moveABoxSnakeThreeX1(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda, movimientoArriba2);
+                                y1 = movimientoArriba2;
+                                x1 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeThreeY2(y1);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeThreeX2(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y1 = movimientoArriba3;
+                                x1 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeThreeY3(y1);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeThreeX3(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y1 = movimientoArriba4;
+                                x1 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeThreeY4(y1);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeThreeX4(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y1 = movimientoArriba5;
+                                x1 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeThreeY5(y1);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeThreeX5(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y1 = movimientoArriba6;
+                                x1 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador, 54);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+                
+            
+            } else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 70; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal==71){
+                                
+                            }else{
+                                for (int i = 71; i < cuadroFinal; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((cuadroActual > 70 && cuadroFinal <= 80)) {
+            
+            
+            if(cuadroFinal == 76){
+                
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                            labelImageOne.setLocation(movimientoIzquierdo, y1);
+                            x1 = movimientoIzquierdo;
+                            //System.out.println(movimientoIzquierdo + "    " + y1);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        
+                        
+                        //ACA BAJA LA TERCERA SNAKE
+                            
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba2 = controller.moveABoxSnakeThreeY1(y1);
+                                int movimientoIzquierda = controller.moveABoxSnakeThreeX1(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda, movimientoArriba2);
+                                y1 = movimientoArriba2;
+                                x1 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeThreeY2(y1);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeThreeX2(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y1 = movimientoArriba3;
+                                x1 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeThreeY3(y1);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeThreeX3(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y1 = movimientoArriba4;
+                                x1 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeThreeY4(y1);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeThreeX4(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y1 = movimientoArriba5;
+                                x1 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeThreeY5(y1);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeThreeX5(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y1 = movimientoArriba6;
+                                x1 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador, 54);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+                
+            }else{
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                            labelImageOne.setLocation(movimientoIzquierdo, y1);
+                            x1 = movimientoIzquierdo;
+                            //System.out.println(movimientoIzquierdo + "    " + y1);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        controller.setPosition(turnoJugador, posFinal);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            }
+
+            
+
+        } else if ((80 >= cuadroActual && 80 < cuadroFinal)) {
+
+            if (cuadrosAvanzar == 12 && cuadroActual == 79) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 80; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 81; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            
+                            //ACA BAJA LA CUARTA SNAKE
+                            
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba1 = controller.moveABoxSnakeFourY1(y1);
+                                int movimientoIzquierda = controller.moveABoxSnakeFourX1(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda, movimientoArriba1);
+                                y1 = movimientoArriba1;
+                                x1 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeFourY2(y1);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeFourX2(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y1 = movimientoArriba3;
+                                x1 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeFourY3(y1);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeFourX3(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y1 = movimientoArriba4;
+                                x1 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeFourY4(y1);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeFourX4(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y1 = movimientoArriba5;
+                                x1 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeFourY5(y1);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeFourX5(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y1 = movimientoArriba6;
+                                x1 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador, 73);
+                            
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 80) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 81; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 80; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 11 && cuadroActual == 80) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 81; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba2);
+                            y1 = movimientoArriba2;
+                            //System.out.println(x1 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            //ACA BAJA LA CUARTA SNAKE
+                            
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba1 = controller.moveABoxSnakeFourY1(y1);
+                                int movimientoIzquierda = controller.moveABoxSnakeFourX1(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda, movimientoArriba1);
+                                y1 = movimientoArriba1;
+                                x1 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeFourY2(y1);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeFourX2(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y1 = movimientoArriba3;
+                                x1 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeFourY3(y1);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeFourX3(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y1 = movimientoArriba4;
+                                x1 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeFourY4(y1);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeFourX4(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y1 = movimientoArriba5;
+                                x1 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeFourY5(y1);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeFourX5(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y1 = movimientoArriba6;
+                                x1 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador, 73);
+                            
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            } else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 80; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                x1 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal==81){
+                                
+                            }else{
+                                for (int i = 81; i < cuadroFinal; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((cuadroActual > 80 && cuadroFinal <= 90)) {
+
+            Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                            labelImageOne.setLocation(movimientoDerecho, y1);
+                            x1 = movimientoDerecho;
+                            //System.out.println(movimientoDerecho + "    " + y1);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+
+        } else if ((90 >= cuadroActual && 90 < cuadroFinal)) {
+
+            if (cuadrosAvanzar == 12 && cuadroActual == 89) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 90; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 91; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+
+                                if (movimientoIzquierdo == 28) {
+                                    labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                    //System.out.println(movimientoIzquierdo + "    " + y1);
+                                    JOptionPane.showMessageDialog(rootPane, "FELICIDADES!!!!!!!  GANO EL JUGADOR "+ controller.returnName(0));
+                                    System.exit(0);
+                                    break;
+                                } else {
+
+                                    labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                    x1 = movimientoIzquierdo;
+                                    //System.out.println(movimientoIzquierdo + "    " + y1);
+                                }
+
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            }
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+                            
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 90) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 91; i < cuadroFinal - 1; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+
+                                if (movimientoIzquierdo == 28) {
+                                    labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                    //System.out.println(movimientoIzquierdo + "    " + y1);
+                                    JOptionPane.showMessageDialog(rootPane, "FELICIDADES!!!!!!!  GANO EL JUGADOR "+ controller.returnName(0));
+                                    System.exit(0);
+                                    break;
+                                } else {
+
+                                    labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                    x1 = movimientoIzquierdo;
+                                    //System.out.println(movimientoIzquierdo + "    " + y1);
+                                }
+
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            }
+                            
+                            
+                            controller.setPosition(turnoJugador, posFinal);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if(cuadroFinal == 91){
+            
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 90; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal == 91){
+                                
+                            }else{
+                                for (int i = 91; i < cuadroFinal; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+
+                                    if (movimientoIzquierdo == 28) {
+                                        labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                        //System.out.println(movimientoIzquierdo + "    " + y1);
+                                        JOptionPane.showMessageDialog(rootPane, "FELICIDADES!!!!!!!  GANO EL JUGADOR "+ controller.returnName(0));
+                                        System.exit(0);
+                                        break;
+                                    } else {
+
+                                        labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                        x1 = movimientoIzquierdo;
+                                        //System.out.println(movimientoIzquierdo + "    " + y1);
+                                    }
+
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                    
+
+                                }
+                            }
+                            
+                            
+                            //ACA BAJA LA CUARTA SNAKE
+                            
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba1 = controller.moveABoxSnakeFourY1(y1);
+                                int movimientoIzquierda = controller.moveABoxSnakeFourX1(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda, movimientoArriba1);
+                                y1 = movimientoArriba1;
+                                x1 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeFourY2(y1);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeFourX2(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y1 = movimientoArriba3;
+                                x1 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeFourY3(y1);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeFourX3(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y1 = movimientoArriba4;
+                                x1 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeFourY4(y1);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeFourX4(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y1 = movimientoArriba5;
+                                x1 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeFourY5(y1);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeFourX5(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y1 = movimientoArriba6;
+                                x1 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador, 73);
+                            
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+                
+                
+            }else if(cuadroFinal == 97){
+            
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 90; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal == 91){
+                                
+                            }else{
+                                for (int i = 91; i < cuadroFinal; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+
+                                    if (movimientoIzquierdo == 28) {
+                                        labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                        //System.out.println(movimientoIzquierdo + "    " + y1);
+                                        JOptionPane.showMessageDialog(rootPane, "FELICIDADES!!!!!!!  GANO EL JUGADOR "+ controller.returnName(0));
+                                        System.exit(0);
+                                        break;
+                                    } else {
+
+                                        labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                        x1 = movimientoIzquierdo;
+                                        //System.out.println(movimientoIzquierdo + "    " + y1);
+                                    }
+
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                    
+
+                                }
+                            }
+                            
+                            
+                            //ACA BAJA LA QUINTA SNAKE
+                            
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba1 = controller.moveABoxSnakeFiveY1(y1);
+                                int movimientoIzquierda = controller.moveABoxSnakeFiveX1(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda, movimientoArriba1);
+                                y1 = movimientoArriba1;
+                                x1 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeFiveY2(y1);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeFiveX2(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y1 = movimientoArriba3;
+                                x1 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeFiveY3(y1);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeFiveX3(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y1 = movimientoArriba4;
+                                x1 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeFiveY4(y1);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeFiveX4(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y1 = movimientoArriba5;
+                                x1 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeFiveY5(y1);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeFiveX5(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y1 = movimientoArriba6;
+                                x1 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador, 61);
+                            
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+                
+                
+            } else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 90; i++) {
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x1);
+                                labelImageOne.setLocation(movimientoDerecho, y1);
+                                x1 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoArriba = controller.moveABoxUP(y1);
+                            labelImageOne.setLocation(x1, movimientoArriba);
+                            y1 = movimientoArriba;
+                            //System.out.println(x1 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal == 91){
+                                
+                            }else{
+                                for (int i = 91; i < cuadroFinal; i++) {
+                                    x1 = labelImageOne.getX();
+                                    y1 = labelImageOne.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+
+                                    if (movimientoIzquierdo == 28) {
+                                        labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                        //System.out.println(movimientoIzquierdo + "    " + y1);
+                                        JOptionPane.showMessageDialog(rootPane, "FELICIDADES!!!!!!!  GANO EL JUGADOR "+ controller.returnName(0));
+                                        System.exit(0);
+                                        break;
+                                    } else {
+
+                                        labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                        x1 = movimientoIzquierdo;
+                                        //System.out.println(movimientoIzquierdo + "    " + y1);
+                                    }
+
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                    
+
+                                }
+                            }
+                            controller.setPosition(turnoJugador, posFinal);
+                            
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((cuadroActual > 90 && cuadroFinal <= 112)) {
+
+            if(cuadroFinal == 97){
+                
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                            if (movimientoIzquierdo > 28) {
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                            } else if (movimientoIzquierdo == 28) {
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                //System.out.println(movimientoIzquierdo + "    " + y1);
+                                JOptionPane.showMessageDialog(rootPane, "FELICIDADES!!!!!!!  GANO EL JUGADOR "+ controller.returnName(0));
+                                System.exit(0);
+                                break;
+                            } else {
+
+                                break;
+                            }
+                            x1 = movimientoIzquierdo;
+
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                        
+                        
+                        //ACA BAJA LA QUINTA SNAKE
+                            
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba1 = controller.moveABoxSnakeFiveY1(y1);
+                                int movimientoIzquierda = controller.moveABoxSnakeFiveX1(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda, movimientoArriba1);
+                                y1 = movimientoArriba1;
+                                x1 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeFiveY2(y1);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeFiveX2(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y1 = movimientoArriba3;
+                                x1 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeFiveY3(y1);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeFiveX3(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y1 = movimientoArriba4;
+                                x1 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeFiveY4(y1);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeFiveX4(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y1 = movimientoArriba5;
+                                x1 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x1 = labelImageOne.getX();
+                                y1 = labelImageOne.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeFiveY5(y1);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeFiveX5(x1);
+
+                                labelImageOne.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y1 = movimientoArriba6;
+                                x1 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador, 61);
+                            
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+                
+                
+            }else{
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x1 = labelImageOne.getX();
+                            y1 = labelImageOne.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x1);
+                            if (movimientoIzquierdo > 28) {
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                System.out.println(movimientoIzquierdo + "    " + y1);
+                            } else if (movimientoIzquierdo == 28) {
+                                labelImageOne.setLocation(movimientoIzquierdo, y1);
+                                System.out.println(movimientoIzquierdo + "    " + y1);
+                                JOptionPane.showMessageDialog(rootPane, "FELICIDADES!!!!!!!  GANO EL JUGADOR "+ controller.returnName(0));
+                                System.exit(0);
+                                break;
+                            } else {
+
+                                break;
+                            }
+                            x1 = movimientoIzquierdo;
+
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                        controller.setPosition(turnoJugador, posFinal);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            }
+            
+            
+            
+
+        }
+        
+        
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public void movePlayer2(int cuadroActual, int cuadrosAvanzar) {
+        
+        jLabel6.setText("Posicion: " + controller.returnPosition(0));
+
+        int cuadroFinal = cuadroActual + cuadrosAvanzar;
+        posFinal2 = cuadroFinal;
+        
+        System.out.println("Cuadro Actual: "+cuadroActual+"       Cuadros Avanzar: "+cuadrosAvanzar+"      CuadroFinal: "+cuadroFinal);
+
+        if ((cuadroActual >= 0 && cuadroFinal <= 10)) {
+
+            if (cuadrosAvanzar == 4) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < cuadroFinal; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+
+                            //ACA SUBE LA PRIMERA ESCALERA
+                            for (int i = 0; i < 5; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba = controller.moveABoxStairOneY(y2);
+                                int movimientoIzquierda = controller.moveABoxStairOneX(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba);
+                                y2 = movimientoArriba;
+                                x2 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, 58);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            } else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < cuadroFinal; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((11 > cuadroActual && 10 < cuadroFinal)) {
+
+            if (cuadrosAvanzar == 12  && cuadroActual == 9) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 10; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 11; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12  && cuadroActual == 10) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 11; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 10; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 11  && cuadroActual == 10) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 11; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            } else {
+
+                if (cuadroFinal == 14) {
+                    Runnable hiloFor = new Runnable() {
+                        public void run() {
+                            Thread actual = Thread.currentThread();
+                            synchronized (actual) {
+
+                                for (int i = cuadroActual; i < 10; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                    labelImageTwo.setLocation(movimientoDerecho, y2);
+                                    x2 = movimientoDerecho;
+                                    //System.out.println(movimientoDerecho + "    " + y2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba = controller.moveABoxUP(y2);
+                                labelImageTwo.setLocation(x2, movimientoArriba);
+                                y2 = movimientoArriba;
+                                //System.out.println(x2 + "    " + movimientoArriba);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                for (int i = 11; i < cuadroFinal; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                    labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                    x2 = movimientoIzquierdo;
+                                    //System.out.println(movimientoIzquierdo + "    " + y2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+
+                                //ACA SUBE A LA SEGUNDA ESCALERA
+                                for (int i = 0; i < 5; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoArriba2 = controller.moveABoxStairTwoY(y2);
+                                    int movimientoIzquierda = controller.moveABoxStairTwoX(x2);
+
+                                    labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba2);
+                                    y2 = movimientoArriba2;
+                                    x2 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador2, 49);
+                            }
+                        }
+
+                    };
+
+                    hilo = new Thread(hiloFor);
+                    hilo.start();
+
+                } else {
+                    Runnable hiloFor = new Runnable() {
+                        public void run() {
+                            Thread actual = Thread.currentThread();
+                            synchronized (actual) {
+
+                                for (int i = cuadroActual; i < 10; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                    labelImageTwo.setLocation(movimientoDerecho, y2);
+                                    x2 = movimientoDerecho;
+                                    //System.out.println(movimientoDerecho + "    " + y2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba = controller.moveABoxUP(y2);
+                                labelImageTwo.setLocation(x2, movimientoArriba);
+                                y2 = movimientoArriba;
+                                //System.out.println(x2 + "    " + movimientoArriba);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                if(cuadroFinal ==  11){
+                                    
+                                }else{
+                                    for (int i = 11; i < cuadroFinal; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                    labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                    x2 = movimientoIzquierdo;
+                                    //System.out.println(movimientoIzquierdo + "    " + y2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                    }
+                                }
+                                
+                                controller.setPosition(turnoJugador2, posFinal2);
+
+                            }
+                        }
+
+                    };
+
+                    hilo = new Thread(hiloFor);
+                    hilo.start();
+                }
+
+            }
+
+        } else if ((cuadroActual > 10 && cuadroFinal <= 20)) {
+
+            if(cuadroFinal == 14){
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                            labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                            x2 = movimientoIzquierdo;
+                            //System.out.println(movimientoIzquierdo + "    " + y2);
+
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+
+                        //ACA SUBE A LA SEGUNDA ESCALERA
+                        for (int i = 0; i < 5; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxStairTwoY(y2);
+                            int movimientoIzquierda = controller.moveABoxStairTwoX(x2);
+
+                            labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            x2 = movimientoIzquierda;
+
+                            //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        controller.setPosition(turnoJugador2, 49);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            }else{
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                            labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                            x2 = movimientoIzquierdo;
+                            //System.out.println(movimientoIzquierdo + "    " + y2);
+
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+
+                        
+                        controller.setPosition(turnoJugador2, posFinal2);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            }
+
+        } else if ((20 >= cuadroActual && 20 < cuadroFinal)) {
+
+            if (cuadrosAvanzar == 12 && cuadroActual == 19) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 20; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 21; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 20) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 21; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 20; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 11 && cuadroActual == 20) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 21; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            } else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 20; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal==21){
+                                
+                            }else{
+                                for (int i = 21; i < cuadroFinal; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((cuadroActual > 20 && cuadroFinal <= 30)) {
+
+            Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                            labelImageTwo.setLocation(movimientoDerecho, y2);
+                            x2 = movimientoDerecho;
+                            //System.out.println(movimientoDerecho + "    " + y2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                        controller.setPosition(turnoJugador2, posFinal2);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+
+        } else if ((30 >= cuadroActual && 30 < cuadroFinal)) {
+
+            if (cuadrosAvanzar == 12 && cuadroActual == 29) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 30; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 31; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 30) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 31; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 30; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            
+            
+            
+            }else if (cuadrosAvanzar == 11 && cuadroActual == 30) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 31; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            
+            
+            
+            }else if(cuadroFinal == 38){
+                
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 30; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal == 31){
+                                
+                            }else{
+                                for (int i = 31; i < cuadroFinal; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            }
+                            
+                            
+                            //ACA BAJA LA PRIMERA SNAKE
+                            
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba2 = controller.moveABoxSnakeOneY1(y2);
+                                int movimientoIzquierda = controller.moveABoxSnakeOneX1(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba2);
+                                y2 = movimientoArriba2;
+                                x2 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeOneY2(y2);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeOneX2(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y2 = movimientoArriba3;
+                                x2 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeOneY3(y2);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeOneX3(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y2 = movimientoArriba4;
+                                x2 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeOneY4(y2);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeOneX4(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y2 = movimientoArriba5;
+                                x2 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeOneY5(y2);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeOneX5(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y2 = movimientoArriba6;
+                                x2 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador2, 20);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+                
+            }else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 30; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal == 31){
+                                
+                            }else{
+                                for (int i = 31; i < cuadroFinal; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((cuadroActual > 30 && cuadroFinal <= 40)) {
+            
+            
+            if(cuadroFinal == 38){
+                
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+                        
+                        //ACA BAJA LA PRIMERA SNAKE
+                            
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba2 = controller.moveABoxSnakeOneY1(y2);
+                                int movimientoIzquierda = controller.moveABoxSnakeOneX1(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba2);
+                                y2 = movimientoArriba2;
+                                x2 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeOneY2(y2);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeOneX2(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y2 = movimientoArriba3;
+                                x2 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeOneY3(y2);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeOneX3(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y2 = movimientoArriba4;
+                                x2 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeOneY4(y2);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeOneX4(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y2 = movimientoArriba5;
+                                x2 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeOneY5(y2);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeOneX5(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y2 = movimientoArriba6;
+                                x2 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador2, 20);
+                            
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            
+            }else{
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                            labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                            x2 = movimientoIzquierdo;
+                            //System.out.println(movimientoIzquierdo + "    " + y2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        controller.setPosition(turnoJugador2, posFinal2);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            }
+
+            
+
+        } else if ((40 >= cuadroActual && 40 < cuadroFinal)) {
+
+            if (cuadrosAvanzar == 12 && cuadroActual == 39) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 40; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 41; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            //ACA BAJA LA SEGUNDA SNAKE
+                                for (int i = 0; i < 5; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoArriba3 = controller.moveABoxSnakeTwoY(y2);
+                                    int movimientoIzquierda = controller.moveABoxSnakeTwoX(x2);
+
+                                    labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba3);
+                                    y2 = movimientoArriba3;
+                                    x2 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba3);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador2, 10);
+                            
+                            
+                            
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 40) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 41; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 40; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 11 && cuadroActual == 40) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 41; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            //ACA BAJA LA SEGUNDA SNAKE
+                                for (int i = 0; i < 5; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoArriba3 = controller.moveABoxSnakeTwoY(y2);
+                                    int movimientoIzquierda = controller.moveABoxSnakeTwoX(x2);
+
+                                    labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba3);
+                                    y2 = movimientoArriba3;
+                                    x2 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba3);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador2, 10);
+                            
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            } else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 40; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal==41){
+                                
+                            }else{
+                                for (int i = 41; i < cuadroFinal; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((cuadroActual > 40 && cuadroFinal <= 50)) {
+
+            Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                            labelImageTwo.setLocation(movimientoDerecho, y2);
+                            x2 = movimientoDerecho;
+                            //System.out.println(movimientoDerecho + "    " + y2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                        controller.setPosition(turnoJugador2, posFinal2);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+
+        } else if ((50 >= cuadroActual && 50 < cuadroFinal)) {
+
+            ///////////////////////////////////////////////////////////////////
+            if (cuadrosAvanzar == 12 && cuadroActual == 49) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 50; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 51; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 50) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 51; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 50; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 11 && cuadroActual == 50) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 51; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            } else {
+
+                if (cuadroFinal == 53) {
+
+                    Runnable hiloFor = new Runnable() {
+                        public void run() {
+                            Thread actual = Thread.currentThread();
+                            synchronized (actual) {
+
+                                for (int i = cuadroActual; i < 50; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                    labelImageTwo.setLocation(movimientoDerecho, y2);
+                                    x2 = movimientoDerecho;
+                                    //System.out.println(movimientoDerecho + "    " + y2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba = controller.moveABoxUP(y2);
+                                labelImageTwo.setLocation(x2, movimientoArriba);
+                                y2 = movimientoArriba;
+                                //System.out.println(x2 + "    " + movimientoArriba);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                for (int i = 51; i < cuadroFinal; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                    labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                    x2 = movimientoIzquierdo;
+                                    //System.out.println(movimientoIzquierdo + "    " + y2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                
+                                
+                                //ACA SUBE A LA TERCERA ESCALERA
+                                for (int i = 0; i < 2; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoArriba2 = controller.moveABoxStairThreeAndFourY(y2);
+                                    int movimientoIzquierda = controller.moveABoxStairThreeX(x2);
+
+                                    labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba2);
+                                    y2 = movimientoArriba2;
+                                    x2 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador2, 72);
+
+                                
+                            }
+                        }
+
+                    };
+
+                    hilo = new Thread(hiloFor);
+                    hilo.start();
+
+                }else if (cuadroFinal == 51) {
+
+                    Runnable hiloFor = new Runnable() {
+                        public void run() {
+                            Thread actual = Thread.currentThread();
+                            synchronized (actual) {
+
+                                for (int i = cuadroActual; i < 50; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                    labelImageTwo.setLocation(movimientoDerecho, y2);
+                                    x2 = movimientoDerecho;
+                                    //System.out.println(movimientoDerecho + "    " + y2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba = controller.moveABoxUP(y2);
+                                labelImageTwo.setLocation(x2, movimientoArriba);
+                                y2 = movimientoArriba;
+                                //System.out.println(x2 + "    " + movimientoArriba);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                if(cuadroFinal==51){
+                                    
+                                }else{
+                                    for (int i = 51; i < cuadroFinal; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                    labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                    x2 = movimientoIzquierdo;
+                                    //System.out.println(movimientoIzquierdo + "    " + y2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                }
+                                
+                                
+                                //ACA BAJA LA SEGUNDA SNAKE
+                                for (int i = 0; i < 5; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoArriba3 = controller.moveABoxSnakeTwoY(y2);
+                                    int movimientoIzquierda = controller.moveABoxSnakeTwoX(x2);
+
+                                    labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba3);
+                                    y2 = movimientoArriba3;
+                                    x2 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba3);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador2, 10);
+                                
+
+                            }
+                        }
+
+                    };
+
+                    hilo = new Thread(hiloFor);
+                    hilo.start();
+
+                } else {
+                    Runnable hiloFor = new Runnable() {
+                        public void run() {
+                            Thread actual = Thread.currentThread();
+                            synchronized (actual) {
+
+                                for (int i = cuadroActual; i < 50; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                    labelImageTwo.setLocation(movimientoDerecho, y2);
+                                    x2 = movimientoDerecho;
+                                    //System.out.println(movimientoDerecho + "    " + y2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba = controller.moveABoxUP(y2);
+                                labelImageTwo.setLocation(x2, movimientoArriba);
+                                y2 = movimientoArriba;
+                                //System.out.println(x2 + "    " + movimientoArriba);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                if(cuadroFinal==51){
+                                    
+                                }else{
+                                    for (int i = 51; i < cuadroFinal; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                    labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                    x2 = movimientoIzquierdo;
+                                    //System.out.println(movimientoIzquierdo + "    " + y2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                }
+                                
+                                controller.setPosition(turnoJugador2, posFinal2);
+
+                            }
+                        }
+
+                    };
+
+                    hilo = new Thread(hiloFor);
+                    hilo.start();
+                }
+
+            }
+
+        } else if ((cuadroActual > 50 && cuadroFinal <= 60)) {
+            
+            if(cuadroFinal == 53){
+                
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                            labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                            x2 = movimientoIzquierdo;
+                            //System.out.println(movimientoIzquierdo + "    " + y2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                        }
+                        
+                        
+                        //ACA SUBE A LA TERCERA ESCALERA
+                                for (int i = 0; i < 2; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoArriba2 = controller.moveABoxStairThreeAndFourY(y2);
+                                    int movimientoIzquierda = controller.moveABoxStairThreeX(x2);
+
+                                    labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba2);
+                                    y2 = movimientoArriba2;
+                                    x2 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador2, 72);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            
+            }else{
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                            labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                            x2 = movimientoIzquierdo;
+                            //System.out.println(movimientoIzquierdo + "    " + y2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            controller.setPosition(turnoJugador2, posFinal2);
+                        }
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            }
+
+            
+
+        } else if ((60 >= cuadroActual && 60 < cuadroFinal)) {
+            
+            if (cuadrosAvanzar == 12 && cuadroActual == 59){
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 60; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 61; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 60){
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 61; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 60; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 11 && cuadroActual == 60){
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 61; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if(cuadroFinal == 64){
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 60; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 61; i < cuadroFinal; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            
+                            //ACA SUBE A LA CUARTA ESCALERA
+                                for (int i = 0; i < 2; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoArriba2 = controller.moveABoxStairThreeAndFourY(y2);
+                                    int movimientoIzquierda = controller.moveABoxStairFourX(x2);
+
+                                    labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba2);
+                                    y2 = movimientoArriba2;
+                                    x2 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador2, 83);
+                            
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+                
+                
+            }else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 60; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal==61){
+                                
+                            }else{
+                                for (int i = 61; i < cuadroFinal; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((cuadroActual > 60 && cuadroFinal <= 70)) {
+            
+            if(cuadroFinal == 64){
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                            labelImageTwo.setLocation(movimientoDerecho, y2);
+                            x2 = movimientoDerecho;
+                            //System.out.println(movimientoDerecho + "    " + y2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                        
+                        
+                        //ACA SUBE A LA CUARTA ESCALERA
+                                for (int i = 0; i < 2; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoArriba2 = controller.moveABoxStairThreeAndFourY(y2);
+                                    int movimientoIzquierda = controller.moveABoxStairFourX(x2);
+
+                                    labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba2);
+                                    y2 = movimientoArriba2;
+                                    x2 = movimientoIzquierda;
+
+                                    //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                                controller.setPosition(turnoJugador2, 83);
+                                
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+                
+            }else{
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                            labelImageTwo.setLocation(movimientoDerecho, y2);
+                            x2 = movimientoDerecho;
+                            //System.out.println(movimientoDerecho + "    " + y2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                        controller.setPosition(turnoJugador2, posFinal2);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            }
+
+            
+        } else if ((70 >= cuadroActual && 70 < cuadroFinal)) {
+
+            if (cuadrosAvanzar == 12 && cuadroActual == 69) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 70; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 71; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 70) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 71; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 70; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 11 && cuadroActual == 70) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 71; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if(cuadroFinal == 76){
+                
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 70; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal==71){
+                                
+                            }else{
+                                for (int i = 71; i < cuadroFinal; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            }
+                            
+                            //ACA BAJA LA TERCERA SNAKE
+                            
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba2 = controller.moveABoxSnakeThreeY1(y2);
+                                int movimientoIzquierda = controller.moveABoxSnakeThreeX1(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba2);
+                                y2 = movimientoArriba2;
+                                x2 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeThreeY2(y2);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeThreeX2(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y2 = movimientoArriba3;
+                                x2 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeThreeY3(y2);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeThreeX3(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y2 = movimientoArriba4;
+                                x2 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeThreeY4(y2);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeThreeX4(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y2 = movimientoArriba5;
+                                x2 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeThreeY5(y2);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeThreeX5(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y2 = movimientoArriba6;
+                                x2 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador2, 54);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+                
+            
+            } else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 70; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal==71){
+                                
+                            }else{
+                                for (int i = 71; i < cuadroFinal; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((cuadroActual > 70 && cuadroFinal <= 80)) {
+            
+            
+            if(cuadroFinal == 76){
+                
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                            labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                            x2 = movimientoIzquierdo;
+                            //System.out.println(movimientoIzquierdo + "    " + y2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        
+                        
+                        //ACA BAJA LA TERCERA SNAKE
+                            
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba2 = controller.moveABoxSnakeThreeY1(y2);
+                                int movimientoIzquierda = controller.moveABoxSnakeThreeX1(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba2);
+                                y2 = movimientoArriba2;
+                                x2 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeThreeY2(y2);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeThreeX2(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y2 = movimientoArriba3;
+                                x2 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeThreeY3(y2);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeThreeX3(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y2 = movimientoArriba4;
+                                x2 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeThreeY4(y2);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeThreeX4(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y2 = movimientoArriba5;
+                                x2 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeThreeY5(y2);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeThreeX5(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y2 = movimientoArriba6;
+                                x2 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador2, 54);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+                
+            }else{
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                            labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                            x2 = movimientoIzquierdo;
+                            //System.out.println(movimientoIzquierdo + "    " + y2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        controller.setPosition(turnoJugador2, posFinal2);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            }
+
+            
+
+        } else if ((80 >= cuadroActual && 80 < cuadroFinal)) {
+
+            if (cuadrosAvanzar == 12 && cuadroActual == 79) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 80; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 81; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            
+                            //ACA BAJA LA CUARTA SNAKE
+                            
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba1 = controller.moveABoxSnakeFourY1(y2);
+                                int movimientoIzquierda = controller.moveABoxSnakeFourX1(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba1);
+                                y2 = movimientoArriba1;
+                                x2 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeFourY2(y2);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeFourX2(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y2 = movimientoArriba3;
+                                x2 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeFourY3(y2);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeFourX3(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y2 = movimientoArriba4;
+                                x2 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeFourY4(y2);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeFourX4(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y2 = movimientoArriba5;
+                                x2 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeFourY5(y2);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeFourX5(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y2 = movimientoArriba6;
+                                x2 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador2, 73);
+                            
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 80) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 81; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = cuadroActual; i < 80; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 11 && cuadroActual == 80) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 81; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba2 = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba2);
+                            y2 = movimientoArriba2;
+                            //System.out.println(x2 + "    " + movimientoArriba2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                            
+                            //ACA BAJA LA CUARTA SNAKE
+                            
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba1 = controller.moveABoxSnakeFourY1(y2);
+                                int movimientoIzquierda = controller.moveABoxSnakeFourX1(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba1);
+                                y2 = movimientoArriba1;
+                                x2 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeFourY2(y2);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeFourX2(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y2 = movimientoArriba3;
+                                x2 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeFourY3(y2);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeFourX3(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y2 = movimientoArriba4;
+                                x2 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeFourY4(y2);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeFourX4(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y2 = movimientoArriba5;
+                                x2 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeFourY5(y2);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeFourX5(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y2 = movimientoArriba6;
+                                x2 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador2, 73);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            } else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 80; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                x2 = movimientoIzquierdo;
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal==81){
+                                
+                            }else{
+                                for (int i = 81; i < cuadroFinal; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((cuadroActual > 80 && cuadroFinal <= 90)) {
+
+            Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                            labelImageTwo.setLocation(movimientoDerecho, y2);
+                            x2 = movimientoDerecho;
+                            //System.out.println(movimientoDerecho + "    " + y2);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+
+        } else if ((90 >= cuadroActual && 90 < cuadroFinal)) {
+
+            if (cuadrosAvanzar == 12 && cuadroActual == 89) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 90; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 91; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+
+                                if (movimientoIzquierdo == 28) {
+                                    labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                    //System.out.println(movimientoIzquierdo + "    " + y2);
+                                    JOptionPane.showMessageDialog(rootPane, "FELICIDADES!!!!!!!  GANO EL JUGADOR "+ controller.returnName(1));
+                                    System.exit(0);
+                                    break;
+                                } else {
+
+                                    labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                    x2 = movimientoIzquierdo;
+                                    //System.out.println(movimientoIzquierdo + "    " + y2);
+                                }
+
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            }
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+                            
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if (cuadrosAvanzar == 12 && cuadroActual == 90) {
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            for (int i = 91; i < cuadroFinal - 1; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+
+                                if (movimientoIzquierdo == 28) {
+                                    labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                    //System.out.println(movimientoIzquierdo + "    " + y2);
+                                    JOptionPane.showMessageDialog(rootPane, "FELICIDADES!!!!!!!  GANO EL JUGADOR "+ controller.returnName(1));
+                                    System.exit(0);
+                                    break;
+                                } else {
+
+                                    labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                    x2 = movimientoIzquierdo;
+                                    //System.out.println(movimientoIzquierdo + "    " + y2);
+                                }
+
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            }
+                            
+                            
+                            controller.setPosition(turnoJugador2, posFinal2);
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+
+            }else if(cuadroFinal == 91){
+            
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 90; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal == 91){
+                                
+                            }else{
+                                for (int i = 91; i < cuadroFinal; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+
+                                    if (movimientoIzquierdo == 28) {
+                                        labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                        //System.out.println(movimientoIzquierdo + "    " + y2);
+                                        JOptionPane.showMessageDialog(rootPane, "FELICIDADES!!!!!!!  GANO EL JUGADOR "+ controller.returnName(1));
+                                        System.exit(0);
+                                        break;
+                                    } else {
+
+                                        labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                        x2 = movimientoIzquierdo;
+                                        //System.out.println(movimientoIzquierdo + "    " + y2);
+                                    }
+
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                    
+
+                                }
+                            }
+                            
+                            
+                            //ACA BAJA LA CUARTA SNAKE
+                            
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba1 = controller.moveABoxSnakeFourY1(y2);
+                                int movimientoIzquierda = controller.moveABoxSnakeFourX1(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba1);
+                                y2 = movimientoArriba1;
+                                x2 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeFourY2(y2);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeFourX2(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y2 = movimientoArriba3;
+                                x2 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeFourY3(y2);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeFourX3(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y2 = movimientoArriba4;
+                                x2 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeFourY4(y2);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeFourX4(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y2 = movimientoArriba5;
+                                x2 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeFourY5(y2);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeFourX5(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y2 = movimientoArriba6;
+                                x2 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador2, 73);
+                            
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+                
+                
+            }else if(cuadroFinal == 97){
+            
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 90; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal == 91){
+                                
+                            }else{
+                                for (int i = 91; i < cuadroFinal; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+
+                                    if (movimientoIzquierdo == 28) {
+                                        labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                        //System.out.println(movimientoIzquierdo + "    " + y2);
+                                        JOptionPane.showMessageDialog(rootPane, "FELICIDADES!!!!!!!  GANO EL JUGADOR "+ controller.returnName(1));
+                                        System.exit(0);
+                                        break;
+                                    } else {
+
+                                        labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                        x2 = movimientoIzquierdo;
+                                        //System.out.println(movimientoIzquierdo + "    " + y2);
+                                    }
+
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                    
+
+                                }
+                            }
+                            
+                            
+                            //ACA BAJA LA QUINTA SNAKE
+                            
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba1 = controller.moveABoxSnakeFiveY1(y2);
+                                int movimientoIzquierda = controller.moveABoxSnakeFiveX1(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba1);
+                                y2 = movimientoArriba1;
+                                x2 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeFiveY2(y2);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeFiveX2(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y2 = movimientoArriba3;
+                                x2 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeFiveY3(y2);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeFiveX3(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y2 = movimientoArriba4;
+                                x2 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeFiveY4(y2);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeFiveX4(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y2 = movimientoArriba5;
+                                x2 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeFiveY5(y2);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeFiveX5(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y2 = movimientoArriba6;
+                                x2 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador2, 61);
+                            
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+                
+                
+            } else {
+
+                Runnable hiloFor = new Runnable() {
+                    public void run() {
+                        Thread actual = Thread.currentThread();
+                        synchronized (actual) {
+
+                            for (int i = cuadroActual; i < 90; i++) {
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoDerecho = controller.moveABoxToTheRight(x2);
+                                labelImageTwo.setLocation(movimientoDerecho, y2);
+                                x2 = movimientoDerecho;
+                                //System.out.println(movimientoDerecho + "    " + y2);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoArriba = controller.moveABoxUP(y2);
+                            labelImageTwo.setLocation(x2, movimientoArriba);
+                            y2 = movimientoArriba;
+                            //System.out.println(x2 + "    " + movimientoArriba);
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(cuadroFinal == 91){
+                                
+                            }else{
+                                for (int i = 91; i < cuadroFinal; i++) {
+                                    x2 = labelImageTwo.getX();
+                                    y2 = labelImageTwo.getY();
+                                    int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+
+                                    if (movimientoIzquierdo == 28) {
+                                        labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                        //System.out.println(movimientoIzquierdo + "    " + y2);
+                                        JOptionPane.showMessageDialog(rootPane, "FELICIDADES!!!!!!!  GANO EL JUGADOR "+ controller.returnName(1));
+                                        System.exit(0);
+                                        break;
+                                    } else {
+
+                                        labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                        x2 = movimientoIzquierdo;
+                                        //System.out.println(movimientoIzquierdo + "    " + y2);
+                                    }
+
+                                    try {
+                                        actual.wait(tiempoHiloMiliseg);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                    
+
+                                }
+                            }
+                            controller.setPosition(turnoJugador2, posFinal2);
+                            
+
+                        }
+                    }
+
+                };
+
+                hilo = new Thread(hiloFor);
+                hilo.start();
+            }
+
+        } else if ((cuadroActual > 90 && cuadroFinal <= 112)) {
+
+            if(cuadroFinal == 97){
+                
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                            if (movimientoIzquierdo > 28) {
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                            } else if (movimientoIzquierdo == 28) {
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                //System.out.println(movimientoIzquierdo + "    " + y2);
+                                JOptionPane.showMessageDialog(rootPane, "FELICIDADES!!!!!!!  GANO EL JUGADOR "+ controller.returnName(1));
+                                System.exit(0);
+                                break;
+                            } else {
+
+                                break;
+                            }
+                            x2 = movimientoIzquierdo;
+
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                        
+                        
+                        //ACA BAJA LA QUINTA SNAKE
+                            
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba1 = controller.moveABoxSnakeFiveY1(y2);
+                                int movimientoIzquierda = controller.moveABoxSnakeFiveX1(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda, movimientoArriba1);
+                                y2 = movimientoArriba1;
+                                x2 = movimientoIzquierda;
+
+                                //System.out.println(movimientoIzquierda + "    " + movimientoArriba1);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba3 = controller.moveABoxSnakeFiveY2(y2);
+                                int movimientoIzquierda3 = controller.moveABoxSnakeFiveX2(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda3, movimientoArriba3);
+                                y2 = movimientoArriba3;
+                                x2 = movimientoIzquierda3;
+
+                                //System.out.println(movimientoIzquierda3 + "    " + movimientoArriba3);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba4 = controller.moveABoxSnakeFiveY3(y2);
+                                int movimientoIzquierda4 = controller.moveABoxSnakeFiveX3(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda4, movimientoArriba4);
+                                y2 = movimientoArriba4;
+                                x2 = movimientoIzquierda4;
+
+                                //System.out.println(movimientoIzquierda4 + "    " + movimientoArriba4);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba5 = controller.moveABoxSnakeFiveY4(y2);
+                                int movimientoIzquierda5 = controller.moveABoxSnakeFiveX4(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda5, movimientoArriba5);
+                                y2 = movimientoArriba5;
+                                x2 = movimientoIzquierda5;
+
+                                //System.out.println(movimientoIzquierda5 + "    " + movimientoArriba5);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //
+                                x2 = labelImageTwo.getX();
+                                y2 = labelImageTwo.getY();
+                                int movimientoArriba6 = controller.moveABoxSnakeFiveY5(y2);
+                                int movimientoIzquierda6 = controller.moveABoxSnakeFiveX5(x2);
+
+                                labelImageTwo.setLocation(movimientoIzquierda6, movimientoArriba6);
+                                y2 = movimientoArriba6;
+                                x2 = movimientoIzquierda6;
+
+                                //System.out.println(movimientoIzquierda6 + "    " + movimientoArriba6);
+                                try {
+                                    actual.wait(tiempoHiloMiliseg);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+                            
+                            controller.setPosition(turnoJugador2, 61);
+                            
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+                
+                
+            }else{
+                Runnable hiloFor = new Runnable() {
+                public void run() {
+                    Thread actual = Thread.currentThread();
+                    synchronized (actual) {
+
+                        for (int i = cuadroActual; i < cuadroFinal; i++) {
+                            x2 = labelImageTwo.getX();
+                            y2 = labelImageTwo.getY();
+                            int movimientoIzquierdo = controller.moveABoxToTheLeft(x2);
+                            if (movimientoIzquierdo > 28) {
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                System.out.println(movimientoIzquierdo + "    " + y2);
+                            } else if (movimientoIzquierdo == 28) {
+                                labelImageTwo.setLocation(movimientoIzquierdo, y2);
+                                System.out.println(movimientoIzquierdo + "    " + y2);
+                                JOptionPane.showMessageDialog(rootPane, "FELICIDADES!!!!!!!  GANO EL JUGADOR "+ controller.returnName(1));
+                                System.exit(0);
+                                break;
+                            } else {
+
+                                break;
+                            }
+                            x2 = movimientoIzquierdo;
+
+                            try {
+                                actual.wait(tiempoHiloMiliseg);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(framePrincipalGame1.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                        controller.setPosition(turnoJugador2, posFinal2);
+
+                    }
+                }
+
+            };
+
+            hilo = new Thread(hiloFor);
+            hilo.start();
+            }
+            
+            
+            
+
+        }
+        
+        
+
+    }
+    
+
+    /*
+    Timer timer = new Timer(2000, new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+        System.out.println("j");
+     }
+    });
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel label_dado1;
     private javax.swing.JLabel label_dado2;
     // End of variables declaration//GEN-END:variables

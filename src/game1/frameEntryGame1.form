@@ -2,7 +2,7 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="a3" green="bf" red="61" type="rgb"/>
     </Property>
@@ -287,7 +287,7 @@
             <Component class="javax.swing.JButton" name="jButton3">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_superman.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/SUPERMAN.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -297,7 +297,7 @@
             <Component class="javax.swing.JButton" name="jButton4">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_green.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/GREEN LANTERN.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -307,7 +307,7 @@
             <Component class="javax.swing.JButton" name="jButton5">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_girl.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/SUPERGIRL.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -317,7 +317,7 @@
             <Component class="javax.swing.JButton" name="jButton6">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_1batman.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/BATMAN.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -327,7 +327,7 @@
             <Component class="javax.swing.JButton" name="jButton7">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_guason.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/JOKER.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -337,7 +337,7 @@
             <Component class="javax.swing.JButton" name="jButton8">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_robin.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/ROBIN.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -347,7 +347,7 @@
             <Component class="javax.swing.JButton" name="jButton9">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_wonder.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/WONDER WOMAN.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -357,7 +357,7 @@
             <Component class="javax.swing.JButton" name="jButton10">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_batichica.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/BATWOMAN.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -367,7 +367,7 @@
             <Component class="javax.swing.JButton" name="jButton11">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_bane.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/BANE.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -377,7 +377,7 @@
             <Component class="javax.swing.JButton" name="jButton12">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_flash.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/FLASH.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -387,7 +387,7 @@
             <Component class="javax.swing.JButton" name="jButton13">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_reverse.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/REVERSE FLASH.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -397,7 +397,7 @@
             <Component class="javax.swing.JButton" name="jButton14">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_acertijo.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/RIDDLER.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -407,7 +407,7 @@
             <Component class="javax.swing.JButton" name="jButton15">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_aquaman.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/AQUAMAN.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -417,7 +417,7 @@
             <Component class="javax.swing.JButton" name="jButton16">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_cyborg.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/CYBORG.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -427,7 +427,7 @@
             <Component class="javax.swing.JButton" name="jButton17">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_manta.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/BLACK MANTA.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -437,7 +437,7 @@
             <Component class="javax.swing.JButton" name="jButton18">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_poison.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/POISON IVY.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -447,7 +447,7 @@
             <Component class="javax.swing.JButton" name="jButton19">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_harley.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/HARLEY QUINN.jpg"/>
                 </Property>
               </Properties>
               <Events>
@@ -457,7 +457,7 @@
             <Component class="javax.swing.JButton" name="jButton20">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/user_images/rsz_bestia.jpg"/>
+                  <Image iconType="3" name="/game1_user_images/BEAST BOY.jpg"/>
                 </Property>
               </Properties>
               <Events>
