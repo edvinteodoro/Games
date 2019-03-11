@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author teodoro
@@ -25,7 +24,7 @@ public class framePrincipal extends javax.swing.JFrame {
     public framePrincipal() {
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-         }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,7 +104,13 @@ public class framePrincipal extends javax.swing.JFrame {
         jLabel4.setText("NUMERO 3");
         panelMenu.add(jLabel4);
 
-        jLabel5.setText("NUMERO 4");
+        jLabel5.setBackground(new java.awt.Color(13, 14, 144));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/damasinglesas.jpg"))); // NOI18N
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
         panelMenu.add(jLabel5);
 
         buttonDaniel.setBackground(new java.awt.Color(255, 102, 102));
@@ -164,8 +169,8 @@ public class framePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-       game2 game2=new game2();
-       game2.setVisible(true);
+        game2 game2 = new game2();
+        game2.setVisible(true);
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void buttonDanielActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDanielActionPerformed
@@ -195,10 +200,21 @@ public class framePrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+
+        String name1 = JOptionPane.showInputDialog(this, "Nombre Jugador 1:", "Datos", JOptionPane.QUESTION_MESSAGE);
+        String name2 = JOptionPane.showInputDialog(this, "Nombre Jugador 2:", "Datos", JOptionPane.QUESTION_MESSAGE);
+
+        if (!name1.replaceAll(" ", "").isEmpty() && !name2.replaceAll(" ", "").isEmpty()) {
+            game4 angel = new game4(this, name1, name2);
+            angel.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jLabel5MouseClicked
+
     /**
      * @param args the command line arguments
      */
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonDaniel;
