@@ -106,7 +106,9 @@ public class game6 extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ahorcado");
         setBackground(new java.awt.Color(255, 153, 0));
-        setForeground(java.awt.Color.orange);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setForeground(new java.awt.Color(255, 204, 0));
+        setName("Ahorcado"); // NOI18N
         setResizable(false);
 
         estadoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -185,6 +187,8 @@ public class game6 extends javax.swing.JFrame {
                 reiniciarButtomActionPerformed(evt);
             }
         });
+
+        jMenuBar1.setBackground(new java.awt.Color(255, 153, 0));
 
         newGame.setText("Opciones");
         newGame.addMouseListener(new java.awt.event.MouseAdapter() {
