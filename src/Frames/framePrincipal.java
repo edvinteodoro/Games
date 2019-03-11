@@ -61,7 +61,7 @@ public class framePrincipal extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 617, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,7 +127,15 @@ public class framePrincipal extends javax.swing.JFrame {
         });
         panelMenu.add(buttonDaniel);
 
-        jLabel7.setText("NUMERO 6");
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/el ahorcado.jpg"))); // NOI18N
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
         panelMenu.add(jLabel7);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -155,7 +163,7 @@ public class framePrincipal extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(41, 41, 41)
-                .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+                .addComponent(panelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 429, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -221,6 +229,12 @@ public class framePrincipal extends javax.swing.JFrame {
         game3.setVisible(true);
         game3.restartGame();
     }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        game6 game6 = new game6();
+        game6.setVisible(true);
+    }//GEN-LAST:event_jLabel7MouseClicked
+
 
     /**
      * @param args the command line arguments
