@@ -93,7 +93,8 @@ public class framePrincipal extends javax.swing.JFrame {
         jLabel4.setText("NUMERO 3");
         panelMenu.add(jLabel4);
 
-        jLabel5.setText("NUMERO 4");
+        jLabel5.setBackground(new java.awt.Color(13, 14, 144));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/damasinglesas.jpg"))); // NOI18N
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel5MouseClicked(evt);
