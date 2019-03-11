@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * @author teodoro
  */
 public class framePrincipal extends javax.swing.JFrame {
-
+    game3 game3 = new game3();
     /**
      * Creates new form framePrincipal
      */
@@ -102,6 +102,11 @@ public class framePrincipal extends javax.swing.JFrame {
         panelMenu.add(jLabel2);
 
         jLabel4.setText("NUMERO 3");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
         panelMenu.add(jLabel4);
 
         jLabel5.setBackground(new java.awt.Color(13, 14, 144));
@@ -211,6 +216,11 @@ public class framePrincipal extends javax.swing.JFrame {
             this.setVisible(false);
         }
     }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        game3.setVisible(true);
+        game3.restartGame();
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments
