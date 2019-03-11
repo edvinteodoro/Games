@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import pacman.Pacman;
 import pacman.tablero;
+import game1.framePrincipalGame1;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -39,7 +41,7 @@ public class framePrincipal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         panelMenu = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -83,8 +85,14 @@ public class framePrincipal extends javax.swing.JFrame {
         panelMenu.setBackground(new java.awt.Color(11, 173, 191));
         panelMenu.setLayout(new java.awt.GridLayout(2, 3));
 
-        jLabel3.setText("NUMERO 1");
-        panelMenu.add(jLabel3);
+        jButton1.setBackground(new java.awt.Color(79, 91, 247));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/game1.2.jpg"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        panelMenu.add(jButton1);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Game2.png"))); // NOI18N
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -171,7 +179,22 @@ public class framePrincipal extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_buttonDanielActionPerformed
-   
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        String numberOfPlayers = JOptionPane.showInputDialog(this, "ENTER DE NUMBER OF PLAYERS", "2");
+        //System.out.println(numeroJugadores);
+        if(numberOfPlayers.equalsIgnoreCase("2") | numberOfPlayers.equalsIgnoreCase("3") | numberOfPlayers.equalsIgnoreCase("4")){
+            framePrincipalGame1 game_1 = new framePrincipalGame1(numberOfPlayers);
+            //game_1.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "THE GAME HAS A MAXIMUM OF 4 PLAYERS");
+        }
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -179,9 +202,9 @@ public class framePrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonDaniel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
